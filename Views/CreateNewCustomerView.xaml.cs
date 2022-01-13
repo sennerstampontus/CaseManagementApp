@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CaseManagementApp.Models;
+using CaseManagementApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,34 @@ namespace CaseManagementApp.Views
         public CreateNewCustomerView()
         {
             InitializeComponent();
+        }
+
+        private async void CreateCustomer_btn_Click(object sender, RoutedEventArgs e)
+        {
+            await CreateCustomerAsync();
+        }
+
+        public async Task CreateCustomerAsync()
+        {
+            Customer customer = new Customer()
+            {
+                FirstName = tbFirstName.Text,
+                LastName = tbLastName.Text,
+                Email = tbEmail.Text,
+                PhoneNumber = tbPhoneNumber.Text,
+                Address = new Address()
+                {
+                    StreetName = tbStreetName.Text,
+                    ZipCode = tbZipCode.Text,
+                    City = tbCity.Text,
+                    Country = tbCountry.Text
+                }
+            };
+
+            SqlService sqlService = new SqlService();
+            await Task.FromResult(sqlService.CreateCustomer(customer));
+
+
         }
     }
 }

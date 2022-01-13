@@ -3,12 +3,14 @@
 
 
 
-    <Style x:Key="ContentMenuButtons" BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="{x:Type RadioButton}">
+    <Style x:Key="TemplateMenuButtons" BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="{x:Type RadioButton}">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
-                        <TextBlock Text="{TemplateBinding Property=Content}" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Poppins Medium"/>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}">
+                            <Label Content="{TemplateBinding Property=Content}" FontFamily="Poppins Medium" HorizontalAlignment="Center"/>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
