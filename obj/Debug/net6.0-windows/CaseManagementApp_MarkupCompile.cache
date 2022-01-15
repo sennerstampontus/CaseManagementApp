@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\App.xaml
-2-1042286707
+131952443226
 
-3-1233169557
-194-164764702
-MainWindow.xaml;Template\TemplateMenuButtons.xaml;
+34-1312145326
+214-1460795449
+MainWindow.xaml;Template\TemplateColumnLabel.xaml;Template\TemplateInputFields.xaml;Template\TemplateInputLabels.xaml;Template\TemplateMenuButtons.xaml;Template\TemplateSubmitButtons.xaml;Views\AdminsView.xaml;Views\CasesView.xaml;Views\CreateCaseView.xaml;Views\CreateNewAdminView.xaml;Views\CreateNewCustomerView.xaml;Views\CreateNewUserView.xaml;Views\CustomersView.xaml;
 
 False
 

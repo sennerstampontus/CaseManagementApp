@@ -4,18 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CaseManagementApp"
+        xmlns:viewModel="clr-namespace:CaseManagementApp.Models.ViewModels"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CaseManager" Height="450" Width="800">
-   
+        Title="CaseManager" Height="800" Width="1200">
+
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="#ACB0BD">
-            
+        <StackPanel Grid.Column="0" Background="#2d3142" HorizontalAlignment="Stretch">
+
+            <Label Content="Menu" Foreground="#9EC5AB" HorizontalAlignment="Center" FontFamily="Poppins" FontWeight="Light" Margin="0 20 0 20"/>
+           
+            <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="New User" Command="{Binding CreateUserCommand}" FontSize="12" IsChecked="True" HorizontalContentAlignment="Left" />
+            <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="New Case" Command="{Binding CreateCaseCommand}" FontSize="12" Margin="0 0 0 20" HorizontalContentAlignment="Left"/>
+            <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="View Customers" Command="{Binding CustomersViewCommand}" FontSize="12" HorizontalContentAlignment="Left"/>
+            <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="View Admins" Command="{Binding AdminsViewCommand}" FontSize="12" HorizontalContentAlignment="Left"/>
+            <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="View Cases" Command="{Binding CasesViewCommand}" FontSize="12" HorizontalContentAlignment="Left"/>
+
+
+
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding CurrentView}"/>

@@ -2,12 +2,46 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CaseManagementApp"
+             xmlns:viewModel="clr-namespace:CaseManagementApp.Models.ViewModels"
+             xmlns:view="clr-namespace:CaseManagementApp.Views"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Template/TemplateMenuButtons.xaml"/>
+                <ResourceDictionary Source="Template/TemplateColumnLabel.xaml"/>
+                <ResourceDictionary Source="Template/TemplateInputLabels.xaml"/>
+                <ResourceDictionary Source="Template/TemplateSubmitButtons.xaml"/>
+                <ResourceDictionary Source="Template/TemplateInputFields.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+
+            <DataTemplate DataType="{x:Type viewModel:CreateNewUserViewModel}">
+                <view:CreateNewUserView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateNewCustomerViewModel}">
+                <view:CreateNewCustomerView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:CustomersViewModel}">
+                <view:CustomersView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateNewAdminViewModel}">
+                <view:CreateNewAdminView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AdminsViewModel}">
+                <view:AdminsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateNewCaseViewModel}">
+                <view:CreateCaseView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:CasesViewModel}">
+                <view:CasesView/>
+            </DataTemplate>
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

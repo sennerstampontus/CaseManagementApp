@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CaseManagementApp.Models;
+using CaseManagementApp.Models.Entity;
+using CaseManagementApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,11 @@ namespace CaseManagementApp
         public MainWindow()
         {
             InitializeComponent();
+
+           
+            
         }
+
+        
     }
 }

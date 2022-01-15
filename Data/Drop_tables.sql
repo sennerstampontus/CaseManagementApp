@@ -1,0 +1,4 @@
+﻿DROP TABLE Cases
+DROP TABLE Admins
+DROP TABLE Customers
+DROP TABLE Addresses
