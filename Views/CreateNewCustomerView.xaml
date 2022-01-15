@@ -9,14 +9,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
+    <Grid Background="#161925">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Content="Create new customer" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Medium" Margin="0 10 0 0"/>
+            <Label Grid.Row="0" Foreground="#9EC5AB" Content="Create new customer" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Medium" Margin="0 10 0 0"/>
 
             <Grid Grid.Row="1" Margin="10">
                 <Grid.ColumnDefinitions>
@@ -33,33 +33,35 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="0" Content="First Name"/>
-                <TextBox x:Name="tbFirstName" Grid.Row="1"  VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbFirstName" Grid.Row="1"  VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="0" Grid.Column="1" Content="Last Name"/>
-                <TextBox x:Name="tbLastName" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbLastName" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="2" Grid.Column="0" Content="Email"/>
-                <TextBox x:Name="tbEmail" Grid.Row="3" Grid.Column="0" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbEmail" Grid.Row="3" Grid.Column="0" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="2" Grid.Column="1" Content="Phone Number"/>
-                <TextBox x:Name="tbPhoneNumber" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbPhoneNumber" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="4" Grid.Column="0" Content="Street Name"/>
-                <TextBox x:Name="tbStreetName" Grid.Row="5" Grid.Column="0" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbStreetName" Grid.Row="5" Grid.Column="0" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="4" Grid.Column="1" Content="Zip Code"/>
-                <TextBox x:Name="tbZipCode" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbZipCode" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="6" Grid.Column="0" Content="City"/>
-                <TextBox x:Name="tbCity" Grid.Row="7" Grid.Column="0" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbCity" Grid.Row="7" Grid.Column="0" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="6" Grid.Column="1" Content="Country"/>
-                <TextBox x:Name="tbCountry" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
+                <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbCountry" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10"/>
 
-                <Button Style="{StaticResource TemplateSubmitButtons}" x:Name="CreateCustomer_btn" Grid.Column="1" Grid.Row="8" Padding="5" Margin="0 20 20 0" Click="CreateCustomer_btn_Click"/>
+                <Button Style="{StaticResource TemplateSubmitButtons}" x:Name="CreateCustomer_btn" Grid.Column="1" Grid.Row="8" Padding="5" Margin="0 20 20 0" Click="CreateCustomer_btn_Click" />
 
+                <Label Foreground="White" x:Name="tbErrorTxt" Grid.Column="1" Grid.Row="9"/>
             </Grid>
 
         </Grid>

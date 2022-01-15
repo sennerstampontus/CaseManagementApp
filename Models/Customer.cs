@@ -15,5 +15,6 @@ namespace CaseManagementApp.Models
         public string PhoneNumber { get; set; } = null!;
         public virtual Address Address { get; set; } = null!;
         public virtual Case Case { get; set; }
+ 
     }
 }

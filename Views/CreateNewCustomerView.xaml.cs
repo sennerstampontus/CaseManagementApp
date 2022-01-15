@@ -22,6 +22,7 @@ namespace CaseManagementApp.Views
     /// </summary>
     public partial class CreateNewCustomerView : UserControl
     {
+       
         public CreateNewCustomerView()
         {
             InitializeComponent();
@@ -29,7 +30,9 @@ namespace CaseManagementApp.Views
 
         private async void CreateCustomer_btn_Click(object sender, RoutedEventArgs e)
         {
+
             await CreateCustomerAsync();
+            
         }
 
         public async Task CreateCustomerAsync()
@@ -49,8 +52,18 @@ namespace CaseManagementApp.Views
                 }
             };
 
-            SqlService sqlService = new SqlService();
-            await Task.FromResult(sqlService.CreateCustomer(customer));
+            if (tbFirstName.Text != "" && tbLastName.Text != "" && tbEmail.Text != "")
+            {
+                SqlService sqlService = new SqlService();
+                int exist = await Task.FromResult(sqlService.CreateCustomer(customer));
+                if (exist == -1)
+                {
+                    tbErrorTxt.Content = "Customer with email already exists.";
+                }
+            }
+
+            else
+                tbErrorTxt.Content = "";
 
 
         }

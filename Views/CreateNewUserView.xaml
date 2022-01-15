@@ -14,13 +14,13 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Column="1" Grid.Row="0" Background="#ACB0BD" >
+            <Grid Grid.Column="1" Grid.Row="0" Background="#161925" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <RadioButton Grid.Column="0"  Style="{StaticResource TemplateMenuButtons}"  Content="New Customer" Command="{Binding CreateCustomerCommand}" FontSize="14"/>
-                <RadioButton Grid.Column="1" Style="{StaticResource TemplateMenuButtons}"  Content="New Administrator" Command="{Binding CreateAdminCommand}" FontSize="14" />
+                <RadioButton Grid.Column="0"  Style="{StaticResource TemplateMenuButtons}"  Content="New Customer" Command="{Binding CreateCustomerCommand}" FontSize="14" BorderBrush="Transparent" BorderThickness="0" IsChecked="True"/>
+                <RadioButton Grid.Column="1" Style="{StaticResource TemplateMenuButtons}"  Content="New Administrator" Command="{Binding CreateAdminCommand}" FontSize="14" BorderBrush="Transparent"  BorderThickness="0"/>
             </Grid>
             <ContentControl Grid.Row="1" Content="{Binding CurrentView}"/>
             

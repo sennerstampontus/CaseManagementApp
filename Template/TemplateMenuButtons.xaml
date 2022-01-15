@@ -9,19 +9,21 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}">
-                            <Label Content="{TemplateBinding Property=Content}" FontFamily="Poppins Medium" HorizontalAlignment="Center"/>
+                            <Label Content="{TemplateBinding Property=Content}" Foreground="{TemplateBinding Foreground}" FontFamily="Poppins Medium" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
         </Style.Setters>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="true">
-                <Setter Property="Background" Value="#D0CDD7"/>
+                <Setter Property="Background" Value="#9EC5AB"/>
+                <Setter Property="Foreground" Value="#161925"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#D0CDD7"/>
+                <Setter Property="Background" Value="#9EC5AB"/>
             </Trigger>
         </Style.Triggers>
     </Style>

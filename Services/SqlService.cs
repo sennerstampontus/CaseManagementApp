@@ -28,7 +28,7 @@ namespace CaseManagementApp.Services
             {
                 var addressEntity = new AddressEntity() { StreetName = address.StreetName, ZipCode = address.ZipCode, City = address.City, Country = address.Country};
                 _context.Addresses.Add(addressEntity);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
                 return addressEntity.Id;
             }
 
@@ -48,14 +48,15 @@ namespace CaseManagementApp.Services
                 customerEntity.Email = customer.Email;
                 customerEntity.PhoneNumber = customer.PhoneNumber;
                 customerEntity.AddressId = CreateAddress(customer.Address);
-                
+
                 _context.Customers.Add(customerEntity);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
 
                 return customerEntity.Id;
             }
 
-            return _customer.Id;
+            else
+                return -1;
 
         }
 
@@ -73,7 +74,7 @@ namespace CaseManagementApp.Services
                 
 
                 _context.Admins.Add(adminEntity);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
 
                 return adminEntity.Id;
             }
@@ -90,7 +91,7 @@ namespace CaseManagementApp.Services
            
 
             _context.Cases.Add(caseEntity);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
 
 
             return caseEntity.CaseId;
@@ -130,14 +131,14 @@ namespace CaseManagementApp.Services
             return _context.Addresses;
         }
 
-        public IEnumerable<CustomerEntity> GetCustomers()
+        public async Task<IEnumerable<CustomerEntity>> GetCustomers()
         {
-            return _context.Customers;
+            return await Task.FromResult(_context.Customers);
         }
 
-        public IEnumerable<AdminEntity> GetAdmins()
+        public async Task<IEnumerable<AdminEntity>> GetAdmins()
         {
-            return _context.Admins;
+            return await Task.FromResult(_context.Admins);
         }
         
         public IEnumerable<CaseEntity> GetCases()

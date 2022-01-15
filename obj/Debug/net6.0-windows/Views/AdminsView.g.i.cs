@@ -53,7 +53,7 @@ namespace CaseManagementApp.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CaseManagementApp;V1.0.0.0;component/views/adminsview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CaseManagementApp;component/views/adminsview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\AdminsView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

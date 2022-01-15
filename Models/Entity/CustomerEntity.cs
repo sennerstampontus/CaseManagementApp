@@ -41,6 +41,9 @@ namespace CaseManagementApp.Models.Entity
 
         public virtual ICollection<CaseEntity> Case { get; set; }
 
+
+        public string FullName => $"{FirstName} {LastName}";
+
     }
 
     

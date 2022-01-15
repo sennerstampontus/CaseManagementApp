@@ -69,5 +69,6 @@ C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Deb
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Views\CreateNewUserView.baml
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Template\TemplateColumnLabel.baml
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Template\TemplateInputLabels.baml
-C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\CaseManagementApp.csproj.AssemblyReference.cache
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Template\TemplateSubmitButtons.baml
+C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Template\TemplateInputFields.baml
+C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\CaseManagementApp.csproj.AssemblyReference.cache

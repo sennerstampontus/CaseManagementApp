@@ -33,5 +33,9 @@ namespace CaseManagementApp.Models.Entity
         public virtual AddressEntity Address { get; set; } = null!;
 
         public virtual ICollection<CaseEntity> Case { get; set; }
+
+
+        public string FullName => $"{FirstName} {LastName}";
+
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CaseManagementApp.Models
 {
-  enum Status
+  public enum Status
     {
-        Waiting,
-        Opened,
-        Closed,
+        Waiting = 0,
+        Opened = 1,
+        Closed = 2
     }
     internal class Case
     {
@@ -20,6 +20,8 @@ namespace CaseManagementApp.Models
         public int CustomerId { get; set; }
         public int AdminId { get; set; }
         public Status State { get; set; }
+
+        //public List<Status> caseState = new();
 
     }
 }

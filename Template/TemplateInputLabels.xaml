@@ -7,7 +7,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Label">
-                        <Label Content="{TemplateBinding Property=Content}" FontFamily="Calibri" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
+                        <Label Foreground="#9EC5AB" Content="{TemplateBinding Property=Content}" FontFamily="Calibri" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

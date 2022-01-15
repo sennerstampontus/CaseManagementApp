@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Template/TemplateColumnLabel.xaml"/>
                 <ResourceDictionary Source="Template/TemplateInputLabels.xaml"/>
                 <ResourceDictionary Source="Template/TemplateSubmitButtons.xaml"/>
+                <ResourceDictionary Source="Template/TemplateInputFields.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 

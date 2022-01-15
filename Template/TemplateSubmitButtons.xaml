@@ -7,11 +7,21 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="5" Background="White" BorderBrush="#ccc" BorderThickness="1" >
-                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="Submit" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0 5 0 5" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    <Border CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="#ccc" BorderThickness="1" >
+                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="Submit" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0 5 0 5" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Background" Value="#9EC5AB"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseCaptured" Value="True">
+                <Setter Property="Background" Value="#D0CDD7"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#2d3142"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
