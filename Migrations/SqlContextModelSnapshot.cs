@@ -52,7 +52,7 @@ namespace CaseManagementApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.AdminEntity", b =>
@@ -89,21 +89,24 @@ namespace CaseManagementApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CaseEntity", b =>
                 {
-                    b.Property<string>("CaseId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CaseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<int?>("AdminEntityId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CaseId"), 1L, 1);
+
+                    b.Property<int?>("AdminId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomerEntityId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -124,11 +127,11 @@ namespace CaseManagementApp.Migrations
 
                     b.HasKey("CaseId");
 
-                    b.HasIndex("AdminEntityId");
+                    b.HasIndex("AdminId");
 
-                    b.HasIndex("CustomerEntityId");
+                    b.HasIndex("CustomerId");
 
-                    b.ToTable("Cases");
+                    b.ToTable("Cases", (string)null);
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CustomerEntity", b =>
@@ -170,7 +173,7 @@ namespace CaseManagementApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.AdminEntity", b =>
@@ -186,15 +189,17 @@ namespace CaseManagementApp.Migrations
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CaseEntity", b =>
                 {
-                    b.HasOne("CaseManagementApp.Models.Entity.AdminEntity", "AdminEntity")
-                        .WithMany("Case")
-                        .HasForeignKey("AdminEntityId");
+                    b.HasOne("CaseManagementApp.Models.Entity.AdminEntity", "Admin")
+                        .WithMany("Cases")
+                        .HasForeignKey("AdminId");
 
-                    b.HasOne("CaseManagementApp.Models.Entity.CustomerEntity", null)
-                        .WithMany("Case")
-                        .HasForeignKey("CustomerEntityId");
+                    b.HasOne("CaseManagementApp.Models.Entity.CustomerEntity", "Customer")
+                        .WithMany("Cases")
+                        .HasForeignKey("CustomerId");
 
-                    b.Navigation("AdminEntity");
+                    b.Navigation("Admin");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CustomerEntity", b =>
@@ -217,12 +222,12 @@ namespace CaseManagementApp.Migrations
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.AdminEntity", b =>
                 {
-                    b.Navigation("Case");
+                    b.Navigation("Cases");
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CustomerEntity", b =>
                 {
-                    b.Navigation("Case");
+                    b.Navigation("Cases");
                 });
 #pragma warning restore 612, 618
         }

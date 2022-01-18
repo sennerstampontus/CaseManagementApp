@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CaseManagementApp.Models.Entity;
+using CaseManagementApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,25 @@ namespace CaseManagementApp.Views
     /// </summary>
     public partial class CustomersView : UserControl
     {
+        SqlService sqlService = new();
         public CustomersView()
         {
             InitializeComponent();
+            GetCustomerList();
+        }
+
+        private async void GetCustomerList()
+        {
+
+
+            var customerList = await sqlService.GetCustomersAsync();
+            foreach(var item in customerList)
+            {
+               
+                lvCustomers.Items.Add(item);
+            }
+            
+           
         }
     }
 }

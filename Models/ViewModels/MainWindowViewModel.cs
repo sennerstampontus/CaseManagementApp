@@ -22,6 +22,9 @@ namespace CaseManagementApp.Models.ViewModels
         public RelayCommand CreateCaseCommand { get; set; }
         public RelayCommand CasesViewCommand { get; set; }
 
+        public RelayCommand CaseDetailsCommand { get; set; }
+
+
        
         public CreateNewUserViewModel CreateNewUserViewModel { get; set; }
 
@@ -32,6 +35,8 @@ namespace CaseManagementApp.Models.ViewModels
 
         public CreateNewCaseViewModel CreateNewCaseViewModel { get; set; }
         public CasesViewModel CasesViewModel { get; set; }
+        
+        public CaseDetailsViewModel CaseDetailsViewModel { get; set; }
         #endregion
 
 
@@ -61,7 +66,7 @@ namespace CaseManagementApp.Models.ViewModels
             CreateNewCaseViewModel = new CreateNewCaseViewModel();
             CasesViewModel = new CasesViewModel();
            
-            
+            CaseDetailsViewModel = new CaseDetailsViewModel();
 
             CustomersViewCommand = new RelayCommand(x => CurrentView = CustomersViewModel);
         
@@ -73,6 +78,7 @@ namespace CaseManagementApp.Models.ViewModels
             CreateCaseCommand = new RelayCommand(x => CurrentView = CreateNewCaseViewModel);
             CasesViewCommand = new RelayCommand(x => CurrentView = CasesViewModel);
 
+            CaseDetailsCommand = new RelayCommand(x => CurrentView = CaseDetailsViewModel);
         }
 
     }

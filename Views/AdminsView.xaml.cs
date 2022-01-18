@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CaseManagementApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,24 @@ namespace CaseManagementApp.Views
         public AdminsView()
         {
             InitializeComponent();
+            GetAdminList();
+        }
+
+        private async void GetAdminList()
+        {
+            SqlService addresses = new();
+            SqlService sqlService = new();
+            var addressList = await addresses.GetAddressesAsync();
+
+
+
+            var adminList = await sqlService.GetAdminsAsync();
+            foreach (var item in adminList)
+            {
+
+                lvAdmins.Items.Add(item);
+            }          
+
         }
     }
 }

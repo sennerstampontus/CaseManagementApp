@@ -12,8 +12,16 @@ namespace CaseManagementApp.Models.Entity
 {
     [Index(nameof(Email), IsUnique = true)]
   
+
     internal class CustomerEntity : IUser
     {
+
+        public CustomerEntity()
+        {
+            this.Cases = new HashSet<CaseEntity>();
+        }
+
+
         [Key]
         public int Id { get; set; }
 
@@ -39,8 +47,8 @@ namespace CaseManagementApp.Models.Entity
         public int AddressId { get; set; }
         public virtual AddressEntity Address { get; set; } = null!;
 
-        public virtual ICollection<CaseEntity> Case { get; set; }
 
+        public ICollection<CaseEntity> Cases { get; set; } = new List<CaseEntity>();
 
         public string FullName => $"{FirstName} {LastName}";
 

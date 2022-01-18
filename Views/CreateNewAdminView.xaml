@@ -37,6 +37,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="0" Content="First Name"/>
                 <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbFirstName" Grid.Row="1"  VerticalContentAlignment="Center" Margin="0 0 20 10"/>
@@ -61,6 +62,7 @@
 
                 <Button Style="{StaticResource TemplateSubmitButtons}" x:Name="CreateAdmin_btn" Grid.Column="0" Grid.Row="8" Content="Submit" Padding="5" Margin="0 20 20 0" Click="CreateAdmin_btn_Click"/>
 
+                <Label x:Name="tbError" Grid.Column="0" Grid.Row="9" Foreground="Red" HorizontalAlignment="Center"/>
             </Grid>
 
         </Grid>

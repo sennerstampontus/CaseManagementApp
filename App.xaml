@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Template/TemplateInputLabels.xaml"/>
                 <ResourceDictionary Source="Template/TemplateSubmitButtons.xaml"/>
                 <ResourceDictionary Source="Template/TemplateInputFields.xaml"/>
+                <ResourceDictionary Source="Template/TemplateListView.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 
@@ -41,6 +42,9 @@
                 <view:CasesView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:CaseDetailsViewModel}">
+                <view:CaseDetailsView/>
+            </DataTemplate>
 
         </ResourceDictionary>
     </Application.Resources>
