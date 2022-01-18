@@ -6,7 +6,42 @@
              xmlns:local="clr-namespace:CaseManagementApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Label Content="ADMINS VIEW"/>
+    <Grid Background="#161925" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Style="{StaticResource TemplateColumnLabel}" Content="ID"/>
+            <Label Grid.Column="1" Style="{StaticResource TemplateColumnLabel}" Content="First Name"/>
+            <Label Grid.Column="2" Style="{StaticResource TemplateColumnLabel}" Content="Last Name"/>
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ListView x:Name="lvAdmins" DataContext="CaseManagementApp.Models.Entity" HorizontalContentAlignment="Stretch" FontSize="14" Background="#161925">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="{Binding Id}" HorizontalAlignment="Center" Foreground="White"/>
+                            <Label Grid.Column="1" Content="{Binding FirstName}" HorizontalAlignment="Center" Foreground="White"/>
+                            <Label Grid.Column="2" Content="{Binding LastName}" HorizontalAlignment="Center" Foreground="White"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

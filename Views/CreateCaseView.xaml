@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CaseManagementApp.Views"
+             xmlns:local="clr-namespace:CaseManagementApp.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#161925">
@@ -29,9 +29,8 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="0" Content="Cutomer"/>
+                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="0" Content="Customer"/>
                 <ComboBox x:Name="cbCustomers" Grid.Row="1" VerticalContentAlignment="Center" Margin="0 0 20 10" Padding="5"/>
-
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="0" Grid.Column="1" Content="Admin on case"/>
                 <ComboBox x:Name="cbAdmins" Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Margin="0 0 20 10" Padding="5"/>

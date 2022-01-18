@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CaseManagementApp.Models.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +9,22 @@ namespace CaseManagementApp.Models
 {
   public enum Status
     {
-        Waiting = 0,
-        Opened = 1,
-        Closed = 2
+        Waiting,
+        Opened,
+        Closed
     }
     internal class Case
     {
+        public int CaseId { get; set; }
         public string Subject { get; set; } = null!;
         public string Description { get; set; } = null!;
-        
-        public int CustomerId { get; set; }
-        public int AdminId { get; set; }
+
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+
+        public CustomerEntity Customer { get; set; }
+        public AdminEntity Admin { get; set; }
         public Status State { get; set; }
 
         //public List<Status> caseState = new();

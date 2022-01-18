@@ -4,9 +4,74 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CaseManagementApp.Views"
+             xmlns:ViewCase="clr-namespace:CaseManagementApp.Models"
+             xmlns:c="clr-namespace:CaseManagementApp.Models.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Label Content="CASES VIEW"/>
+             d:DesignHeight="800" d:DesignWidth="1200">
+    
+    <Grid Background="#161925" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Style="{StaticResource TemplateColumnLabel}" Content="Id"/>
+            <Label Grid.Column="1" Style="{StaticResource TemplateColumnLabel}" Content="Subject"/>
+            <Label Grid.Column="2" Style="{StaticResource TemplateColumnLabel}" Content="Date Created"/>
+            <Label Grid.Column="3" Style="{StaticResource TemplateColumnLabel}" Content="Date Updated"/>
+            <Label Grid.Column="4" Style="{StaticResource TemplateColumnLabel}" Content="Status"/>
+            <Label Grid.Column="5" Style="{StaticResource TemplateColumnLabel}" Content="Customer Id"/>
+            <Label Grid.Column="6" Style="{StaticResource TemplateColumnLabel}" Content="Admin Id"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <ListView x:Name="lvCases" HorizontalContentAlignment="Stretch" FontSize="14" Background="#161925"  >
+                <ListView.Resources>
+                    <ViewCase:Case x:Key="CaseSource"/>
+                </ListView.Resources>
+                <ListView.DataContext>
+                    <Binding Source="{StaticResource CaseSource}"/>
+                </ListView.DataContext>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Name="spTest">
+                            <Button x:Name="ShowCaseDetails" Command="{Binding CaseDetailsCommand}" HorizontalContentAlignment="Stretch" Background="Transparent" MouseDoubleClick="ShowCaseDetails_MouseDoubleClick">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Content="{Binding CaseId}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="1" Content="{Binding Subject}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="2" Content="{Binding CreatedDate}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="3" Content="{Binding UpdatedDate}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="4" Content="{Binding State}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="5" Content="{Binding Customer.Id}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="6" Content="{Binding Admin.Id}" HorizontalAlignment="Center" Foreground="White"/>
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

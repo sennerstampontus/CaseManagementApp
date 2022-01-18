@@ -50,7 +50,24 @@ namespace CaseManagementApp.Views
             };
 
             SqlService sqlService = new SqlService();
-            await Task.FromResult(sqlService.CreateAdmin(admin));
+            int Exist = sqlService.CreateAdmin(admin);
+            if(Exist == -1)
+                tbError.Content = "An admin with the same email aldready exists";
+            
+            else
+                ClearFields();
+        }
+
+        private void ClearFields()
+        {
+            tbFirstName.Text = "";
+            tbLastName.Text = "";
+            tbEmail.Text = "";
+            tbStreetName.Text = "";
+            tbZipCode.Text = "";
+            tbCity.Text = "";
+            tbCountry.Text ="";
+            tbError.Content = "";
         }
 
     }

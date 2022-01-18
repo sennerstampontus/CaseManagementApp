@@ -1,4 +1,9 @@
-﻿using System;
+﻿using CaseManagementApp.Helpers;
+using CaseManagementApp.Models;
+using CaseManagementApp.Models.Entity;
+using CaseManagementApp.Models.ViewModels;
+using CaseManagementApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +25,30 @@ namespace CaseManagementApp.Views
     /// </summary>
     public partial class CasesView : UserControl
     {
+        SqlService sqlService = new();
+
         public CasesView()
         {
+            
             InitializeComponent();
+            GetCases();
+        }
+
+        private async void GetCases()
+        {
+            var _case = await sqlService.GetCasesAsync();
+            foreach (var item in _case)
+            {
+                lvCases.Items.Add(item);
+                
+            }
+
+            
+        }
+
+        private void ShowCaseDetails_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+           
         }
     }
 }

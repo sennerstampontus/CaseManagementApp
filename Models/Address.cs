@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CaseManagementApp.Models
 {
-    internal class Address
+    public class Address
     {
         public string StreetName { get; set; } = null!;
         public string ZipCode { get; set; } = null!;

@@ -10,6 +10,9 @@
     <Compile Update="Views\AdminsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CaseDetailsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CasesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -33,6 +36,9 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Template\TemplateListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Template\TemplateColumnLabel.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -49,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AdminsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CaseDetailsView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CasesView.xaml">

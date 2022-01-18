@@ -11,7 +11,7 @@ namespace CaseManagementApp.Models.Entity
     internal class CaseEntity
     {
         [Key]
-        public string CaseId { get; set; } = Guid.NewGuid().ToString("N").Substring(0,12);
+        public int CaseId { get; set; }
         
         [Required]
         [StringLength(50)]
@@ -21,16 +21,18 @@ namespace CaseManagementApp.Models.Entity
         public string Description { get; set; } = null!;
 
         [Required]
-        public string State { get; set; } = null!;
-
-        [Required]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 
         [Required]
         public DateTime UpdatedDate { get; set; } = DateTime.Now;
 
-        public virtual AdminEntity? AdminEntity { get; set; }
+
+        [Required]
+        public string State { get; set; } = null!;
+
+        public virtual CustomerEntity Customer { get; set; }
+        public virtual AdminEntity Admin { get; set; }
 
     }
 }

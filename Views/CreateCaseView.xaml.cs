@@ -25,54 +25,67 @@ namespace CaseManagementApp.Views
     { 
         private readonly SqlService customerService = new();
         private readonly SqlService adminService = new();
-        private readonly SqlService caseService = new();
-        public enum states
-        {
-            Waiting = 0,
-            Opened = 1,
-            Closed = 2
-        }
-        
+
 
         public CreateCaseView()
         {
             InitializeComponent();
-            Task.FromResult(FillCustomerOptions());
-            Task.FromResult(FillAdminOptions());
-            FillStausOptions();
-            ArrengeComboBox();  
+            Task.FromResult(PopulateOptionsAsync());
+            ArrengeComboBox();
+            GetCustomerList();
+            
             
         }
 
-
-        private async void CreateCase_btn_Click(object sender, RoutedEventArgs e)
+        public async void GetCustomerList()
         {
-            await CreateCaseAsync();
-        }
+            List<CustomerEntity> customerList = new();
 
-        private async Task CreateCaseAsync()
-        {
-            Case _case = new()
+            foreach(var customer in await customerService.GetCustomersAsync())
             {
-                CustomerId = cbCustomers.SelectedIndex,
-                AdminId = cbAdmins.SelectedIndex,
-                Subject = tbSubject.Text,
-                Description = tbDescription.Text,
-                State = (Status)Enum.Parse(typeof(Status),cbState.SelectedValuePath)
-            };
-
-            if(cbCustomers.SelectedIndex != -0 && tbSubject.Text != "" && tbDescription.Text != "")
-            {
-                SqlService sqlService = new SqlService();
-                sqlService.CreateCase(_case);
+                customerList.Add(customer);
             }
 
         }
 
-        private async Task PopulateOptions()
+        private async void CreateCase_btn_Click(object sender, RoutedEventArgs e)
         {
-            await FillCustomerOptions();
-            await FillAdminOptions();
+            await CreateCaseAsync();
+           
+        }
+
+        private async Task CreateCaseAsync()
+        {
+
+           
+            var customerId = (int)cbCustomers.SelectedValue;
+            var customer = customerService.GetCustomer(customerId);
+
+            var adminId = (int)cbAdmins.SelectedValue;
+            var admin = adminService.GetAdmin(adminId);
+
+            Case _case = new()
+            {
+                Customer = customer,
+                Admin = admin,
+                Subject = tbSubject.Text,
+                Description = tbDescription.Text,
+                State = (Status)Enum.Parse(typeof(Status),cbState.SelectedValue.ToString())
+            };
+
+            if(cbCustomers.SelectedIndex != -1 && tbSubject.Text != "" && tbDescription.Text != "")
+            {
+                SqlService sqlService = new();
+                sqlService.CreateCase(_case);
+                ClearFields();
+            }
+        }
+
+        private async Task PopulateOptionsAsync()
+        {
+            await FillCustomerOptionsAsync();
+            await FillAdminOptionsAsync();
+            await FillStausOptionsAsync();
         }
 
         private void ArrengeComboBox()
@@ -84,42 +97,54 @@ namespace CaseManagementApp.Views
             cbAdmins.DisplayMemberPath = "Value";
 
             cbState.SelectedValuePath = "Key";
-            cbState.DisplayMemberPath = "Value";
-           
+            cbState.DisplayMemberPath= "Value";
         }
 
 
-        private async Task FillStausOptions()
+        private async Task FillStausOptionsAsync()
         {
             cbState.Items.Clear();
-            foreach(var _state in Enum.GetValues(typeof(states)))
+            foreach(var _state in await Task.FromResult(Enum.GetValues(typeof(Status))))
             {
                 cbState.Items.Add(new KeyValuePair<int, string>((int)_state, _state.ToString()));
             }
         }
 
-        private async Task FillCustomerOptions()
+        private async Task FillCustomerOptionsAsync()
         {
             cbCustomers.Items.Clear();
             
-            foreach(var customer in await customerService.GetCustomers())
+            foreach (var customer in await customerService.GetCustomersAsync())
             {
-               await Task.FromResult(cbCustomers.Items.Add(new KeyValuePair<int, string>(customer.Id, $"{customer.FullName} <{customer.Email}>")));
+                cbCustomers.Items.Add(new KeyValuePair<int, string>(customer.Id, customer.FirstName));      
+                //cbCustomers.Items.Add(customer);
             }
+
+            
             
         }
 
-        private async Task FillAdminOptions()
+        private async Task FillAdminOptionsAsync()
         {
             cbAdmins.Items.Clear();
             
-            foreach (var admin in await adminService.GetAdmins())
+            
+            foreach (var admin in await adminService.GetAdminsAsync())
             {
-               await Task.FromResult(cbAdmins.Items.Add(new KeyValuePair<int, string>(admin.Id, $"{admin.Id} : {admin.FullName}")));
+                cbAdmins.Items.Add(new KeyValuePair<int, string>(admin.Id, $"{admin.Id} : {admin.FirstName} {admin.LastName}"));
+                //cbAdmins.Items.Add(admin);
             }
-
+            
         }
 
+        private void ClearFields()
+        {
+            tbSubject.Text = "";
+            tbDescription.Text = "";
+            cbCustomers.SelectedIndex = -1;
+            cbAdmins.SelectedIndex = -1;
+            cbState.SelectedIndex = -1;
+        }
         
     }
 }

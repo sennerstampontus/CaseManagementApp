@@ -1,4 +1,5 @@
 ﻿using CaseManagementApp.Models;
+using CaseManagementApp.Models.Entity;
 using CaseManagementApp.Services;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,12 @@ namespace CaseManagementApp.Views
     /// </summary>
     public partial class CreateNewCustomerView : UserControl
     {
+        
+
        
         public CreateNewCustomerView()
         {
-            InitializeComponent();
+            InitializeComponent();          
         }
 
         private async void CreateCustomer_btn_Click(object sender, RoutedEventArgs e)
@@ -37,6 +40,7 @@ namespace CaseManagementApp.Views
 
         public async Task CreateCustomerAsync()
         {
+
             Customer customer = new Customer()
             {
                 FirstName = tbFirstName.Text,
@@ -49,23 +53,38 @@ namespace CaseManagementApp.Views
                     ZipCode = tbZipCode.Text,
                     City = tbCity.Text,
                     Country = tbCountry.Text
-                }
-            };
+                },
+        };
+
+         
 
             if (tbFirstName.Text != "" && tbLastName.Text != "" && tbEmail.Text != "")
             {
-                SqlService sqlService = new SqlService();
-                int exist = await Task.FromResult(sqlService.CreateCustomer(customer));
-                if (exist == -1)
-                {
+                
+                SqlService SqlService = new SqlService();
+                
+                int Exist = SqlService.CreateCustomer(customer);              
+                if (Exist == -1)
                     tbErrorTxt.Content = "Customer with email already exists.";
-                }
             }
 
             else
-                tbErrorTxt.Content = "";
+                ClearFields();
+                
 
 
+        }
+
+        private void ClearFields()
+        {
+            tbFirstName.Text = "";
+            tbLastName.Text = "";
+            tbEmail.Text = "";
+            tbStreetName.Text = "";
+            tbZipCode.Text = "";
+            tbCity.Text = "";
+            tbCountry.Text = "";
+            tbErrorTxt.Content = "";
         }
     }
 }

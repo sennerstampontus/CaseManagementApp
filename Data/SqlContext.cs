@@ -19,9 +19,10 @@ namespace CaseManagementApp.Data
         }
 
         public virtual DbSet<AddressEntity> Addresses { get; set; } = null!;
+        public virtual DbSet<CaseEntity> Cases { get; set; } = null!;
         public virtual DbSet<CustomerEntity> Customers { get; set; } = null!;
         public virtual DbSet<AdminEntity> Admins { get; set; } = null!;
-        public virtual DbSet<CaseEntity> Cases { get; set; } = null!;
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

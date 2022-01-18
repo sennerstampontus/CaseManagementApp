@@ -28,9 +28,8 @@
             <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="View Customers" Command="{Binding CustomersViewCommand}" FontSize="12" HorizontalContentAlignment="Left"/>
             <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="View Admins" Command="{Binding AdminsViewCommand}" FontSize="12" HorizontalContentAlignment="Left"/>
             <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="View Cases" Command="{Binding CasesViewCommand}" FontSize="12" HorizontalContentAlignment="Left"/>
-
-
-
+            <RadioButton Style="{StaticResource TemplateMenuButtons}" Content="Case Details" Command="{Binding CaseDetailsCommand}" FontSize="12" HorizontalContentAlignment="Left" Margin="0 20 0 0 "/>
+            
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding CurrentView}"/>

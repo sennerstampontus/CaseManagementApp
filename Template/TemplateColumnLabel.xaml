@@ -7,8 +7,8 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Label">
-                        <Border BorderBrush="Black" BorderThickness="1">
-                            <Label Content="{TemplateBinding Property=Content}" FontFamily="Poppins" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border BorderBrush="#161925" BorderThickness="1" Background="#9EC5AB">
+                            <Label Content="{TemplateBinding Property=Content}" FontFamily="Poppins" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>

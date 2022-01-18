@@ -28,7 +28,7 @@ namespace CaseManagementApp.Services
             {
                 var addressEntity = new AddressEntity() { StreetName = address.StreetName, ZipCode = address.ZipCode, City = address.City, Country = address.Country};
                 _context.Addresses.Add(addressEntity);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return addressEntity.Id;
             }
 
@@ -38,7 +38,7 @@ namespace CaseManagementApp.Services
        
         public int CreateCustomer(Customer customer)
         {
-            var _customer = _context.Customers.Where(x => x.Email == customer.Email).FirstOrDefault();
+            var _customer = _context.Customers.Where(x => x.Email == customer.Email).FirstOrDefault();       
             if (_customer == null)
             {
                 var customerEntity = new CustomerEntity();
@@ -48,9 +48,10 @@ namespace CaseManagementApp.Services
                 customerEntity.Email = customer.Email;
                 customerEntity.PhoneNumber = customer.PhoneNumber;
                 customerEntity.AddressId = CreateAddress(customer.Address);
+                
 
                 _context.Customers.Add(customerEntity);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 return customerEntity.Id;
             }
@@ -63,7 +64,7 @@ namespace CaseManagementApp.Services
         public int CreateAdmin(Admin admin)
         {
             var _admin = _context.Admins.Where(x => x.Email == admin.Email).FirstOrDefault();
-            if(_admin == null)
+            if (_admin == null)
             {
                 var adminEntity = new AdminEntity();
 
@@ -71,27 +72,32 @@ namespace CaseManagementApp.Services
                 adminEntity.LastName = admin.LastName;
                 adminEntity.Email = admin.Email;
                 adminEntity.AddressId = CreateAddress(admin.Address);
-                
+
 
                 _context.Admins.Add(adminEntity);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 return adminEntity.Id;
             }
-            return _admin.Id;
+            else
+                return -1;
         }
 
-        public string CreateCase(Case _case)
+        public int CreateCase(Case _case)
         {
             var caseEntity = new CaseEntity();
+            var _customer = _context.Customers.Where(x => x.Id == _case.Customer.Id).FirstOrDefault();
+            var _admin = _context.Admins.Where(x => x.Id == _case.Admin.Id).FirstOrDefault();
+
 
             caseEntity.Subject = _case.Subject;
             caseEntity.Description = _case.Description;
             caseEntity.State = _case.State.ToString();
-           
+            caseEntity.Customer = _customer;
+            caseEntity.Admin = _admin;
 
             _context.Cases.Add(caseEntity);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
 
             return caseEntity.CaseId;
@@ -113,7 +119,7 @@ namespace CaseManagementApp.Services
             return _context.Customers.Include(x => x.Address).SingleOrDefault(x =>x.Id == id);
         }
 
-        public AdminEntity GetAmin(int id)
+        public AdminEntity GetAdmin(int id)
         {
             return _context.Admins.Include(x => x.Address).SingleOrDefault(x => x.Id == id);
         }
@@ -121,29 +127,29 @@ namespace CaseManagementApp.Services
 
         public CaseEntity GetCase(int id)
         {
-            return _context.Cases.SingleOrDefault(x => x.CaseId == id.ToString());
+            return _context.Cases.Include(x => x.Customer).Include(x => x.Admin).SingleOrDefault(x => x.CaseId == id);
         }
 
         //Multiple results
 
-        public IEnumerable<AddressEntity> GetAddresses()
+        public async Task<IEnumerable<AddressEntity>> GetAddressesAsync()
         {
-            return _context.Addresses;
+            return await Task.FromResult(_context.Addresses);
         }
 
-        public async Task<IEnumerable<CustomerEntity>> GetCustomers()
+        public async Task<IEnumerable<CustomerEntity>> GetCustomersAsync()
         {
-            return await Task.FromResult(_context.Customers);
+            return await Task.FromResult(_context.Customers.Include(x => x.Address));
         }
 
-        public async Task<IEnumerable<AdminEntity>> GetAdmins()
+        public async Task<IEnumerable<AdminEntity>> GetAdminsAsync()
         {
-            return await Task.FromResult(_context.Admins);
+            return await Task.FromResult(_context.Admins.Include(x => x.Address));
         }
         
-        public IEnumerable<CaseEntity> GetCases()
+        public async Task<IEnumerable<CaseEntity>> GetCasesAsync()
         {
-            return _context.Cases;
+            return await Task.FromResult(_context.Cases.Include(x => x.Customer).Include(x => x.Admin));
         }
 
 
