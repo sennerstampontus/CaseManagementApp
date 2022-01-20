@@ -74,4 +74,6 @@ C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Deb
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Template\TemplateListView.baml
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Views\CaseDetailsView.g.cs
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Views\CaseDetailsView.baml
+C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Views\StartUpScreen.g.cs
+C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\Views\StartUpScreen.baml
 C:\Users\Kappa\Documents\Programing\CSharp\CaseHandler\CaseManagementApp\obj\Debug\net6.0-windows\CaseManagementApp.csproj.AssemblyReference.cache

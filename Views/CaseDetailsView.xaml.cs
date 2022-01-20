@@ -34,7 +34,9 @@ namespace CaseManagementApp.Views
         private readonly SqlService customerService = new();
         private readonly SqlService adminService = new();
         private readonly SqlService caseService = new();
-
+        private readonly SqlService updateCaseService = new();
+        private readonly SqlService updateAdminService = new();
+        private readonly List<AdminEntity> _admins = new();
 
         public CaseDetailsView()
         {
@@ -59,7 +61,7 @@ namespace CaseManagementApp.Views
             GetAdminList();
         }
 
-        private void SetValues(CaseEntity caseResult)
+        private AdminEntity SetValues(CaseEntity caseResult)
         {
             lblCaseId.Content = caseResult.CaseId;
             lblSubject.Content = caseResult.Subject;
@@ -67,15 +69,17 @@ namespace CaseManagementApp.Views
             lblAdmins.Content = caseResult.Admin.FullName;
             lblState.Content = caseResult.State;
 
+            return caseResult.Admin;
         }
 
-        private void GetCase()
+        private CaseEntity GetCase()
         {
             var caseId = (int)cbCustomersCase.SelectedValue;
             var _case = caseService.GetCase(caseId);
 
             SetValues(_case);
 
+            return _case;
         }
 
         private async void GetCustomerList()
@@ -98,22 +102,24 @@ namespace CaseManagementApp.Views
 
         private async Task FillCustomerOptionsAsync()
         {
-            cbCustomersCase.Items.Clear();
+            //cbCustomersCase.Items.Clear();
 
-            foreach (var customer in await customerService.GetCustomersAsync())
+            foreach (var _case in await customerService.GetCasesAsync())
             {
-                cbCustomersCase.Items.Add(new KeyValuePair<int, string>(customer.Id, customer.FirstName));
+                cbCustomersCase.Items.Add(new KeyValuePair<int, string>(_case.CaseId, $"{_case.CaseId}: {_case.Customer.Email} <{_case.Subject}>"));
                 //cbCustomers.Items.Add(customer);
             }
         }
 
         private async Task FillAdminOptionsAsync()
         {
-            cbAdmins.Items.Clear();
+            //cbAdmins.Items.Clear();
+
 
             foreach (var admin in await adminService.GetAdminsAsync())
             {
                 cbAdmins.Items.Add(new KeyValuePair<int, string>(admin.Id, $"{admin.Id} : {admin.FirstName} {admin.LastName}"));
+                _admins.Add(admin);
                 //cbAdmins.Items.Add(admin);
             }
         }
@@ -140,14 +146,80 @@ namespace CaseManagementApp.Views
             cbState.DisplayMemberPath = "Value";
         }
 
+        private int UpdateCaseAdmin()
+        {          
+            if (cbAdmins.SelectedValue != null)
+            {
+                var newAdminId = (int)cbAdmins.SelectedValue;
+                return newAdminId;
+            }
+
+            else
+                return -1;
+            
+            
+
+        }
+
+        private string UpdateCaseState()
+        {
+            var newCaseState = (Status)Enum.Parse(typeof(Status), cbState.SelectedValue.ToString());
+            return newCaseState.ToString();
+        }
+
         private void btnSaveCase_Click(object sender, RoutedEventArgs e)
         {
 
+
+            var _case = GetCase();
+            int caseId = _case.CaseId;
+
+
+            var newAdminId = UpdateCaseAdmin();
+            string newState = UpdateCaseState();
+
+            var listOfAdmins = FillAdminOptionsAsync();
+            
+            if(newAdminId > 0)
+            {
+                var newAdmin = _admins.Where(x => x.Id == newAdminId).FirstOrDefault();
+                CaseEntity patchedCase = new()
+                {
+                    Admin = newAdmin,
+                    State = newState,
+                    UpdatedDate = DateTime.Now
+                };
+
+                updateCaseService.UpdateCase(caseId, patchedCase);
+            }
+
+            else
+            {                          
+                CaseEntity patchedCase = new()
+                {
+                    Admin = _case.Admin,
+                    State = newState
+                };
+
+                updateCaseService.UpdateCase(caseId, patchedCase);
+            }
+
+            
+            
+
+
+            
+            
         }
 
         private void cbCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GetCase();
+            var _case = GetCase();
+            var state = (Status)Enum.Parse(typeof(Status),_case.State);
+            
+
+            cbAdmins.SelectedValue = _case.Admin.Id;
+
         }
     }
 }

@@ -19,9 +19,9 @@ namespace CaseManagementApp.Models
         public string Subject { get; set; } = null!;
         public string Description { get; set; } = null!;
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
 
-        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+        public DateTime UpdatedDate { get; set; }
 
         public CustomerEntity Customer { get; set; }
         public AdminEntity Admin { get; set; }

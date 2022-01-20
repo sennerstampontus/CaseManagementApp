@@ -17,6 +17,10 @@
             </ResourceDictionary.MergedDictionaries>
 
 
+            <DataTemplate DataType="{x:Type viewModel:StartScreenViewModel}">
+                <view:StartUpScreen/>
+            </DataTemplate>
+            
             <DataTemplate DataType="{x:Type viewModel:CreateNewUserViewModel}">
                 <view:CreateNewUserView/>
             </DataTemplate>
