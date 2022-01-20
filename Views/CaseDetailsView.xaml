@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CaseManagementApp.Views"
              xmlns:ViewCase="clr-namespace:CaseManagementApp.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1200">
     <Grid Background="#161925">
         <Grid>
             <Grid.RowDefinitions>
@@ -17,7 +17,7 @@
 
             <Label Foreground="#9EC5AB" Grid.Row="0"  Content="Case Details" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Medium" Margin="0 10 0 0"/>
 
-            <Grid Grid.Row="1" Margin="10">
+            <Grid Grid.Row="1" Margin="20 0 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -37,21 +37,50 @@
                     <Label  Grid.Row="0" Style="{StaticResource TemplateInputLabels}" Content="Case:" Foreground="White"/>
                     <Label x:Name="lblCaseId" Grid.Row="0" Foreground="White"/>
                 </StackPanel>
-                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="1" Content="Customer" HorizontalAlignment="Center" Margin="0 0 170 0"/>
-                <ComboBox x:Name="cbCustomersCase" Grid.Row="2" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="0 0 20 10" Padding="100 5" MaxWidth="320" SelectionChanged="cbCustomers_SelectionChanged"/>
 
-                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="3" Grid.Column="1" Content="Admin on case" HorizontalAlignment="Center"/>
-                <Label x:Name="lblAdmins" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" Foreground="White" Padding="5 0 0 15" HorizontalAlignment="Center"/>
+                <StackPanel  Grid.Row="1" Grid.Column="0">
+                    <Label Style="{StaticResource TemplateInputLabels}" Content="Customer" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="cbCustomersCase" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="250" Height="25" SelectionChanged="cbCustomers_SelectionChanged"/>
+                </StackPanel>
 
-                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="3" Grid.Column="0" Content="Subject" HorizontalAlignment="Center" Margin="0 0 150 0"/>
-                <Label x:Name="lblSubject"  Grid.Row="4" Grid.Column="0" VerticalContentAlignment="Center" Foreground="White" Padding="0 10 100 15" HorizontalAlignment="Center"/>
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <Label Style="{StaticResource TemplateInputLabels}"  Content="Admin on case" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="#9EC5AB" BorderThickness="2" Background="#2d3142" HorizontalAlignment="Center" Width="200" MaxWidth="300" MaxHeight="30">
+                        <Label x:Name="lblAdmins" Content="Admin assigned" Grid.Column="1" Grid.Row="3" Foreground="White" HorizontalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
 
-                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="5" Grid.Column="1" Content="Status" HorizontalAlignment="Center"/>
-                <Label x:Name="lblState" Content="Opened" Grid.Row="6" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="0 0 0 15" Foreground="White"/>
 
-                <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="5" Grid.Column="0" Content="Description" HorizontalAlignment="Center" Margin="0 0 125 0"/>
-                <TextBlock x:Name="tbDescription" Height="80" MaxHeight="120" TextWrapping="Wrap" Grid.Row="6" Grid.Column="0" Foreground="White" Padding="0 10 80 15" HorizontalAlignment="Center"/>
+                <Grid Grid.Row="5" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Label Style="{StaticResource TemplateInputLabels}" Content="Subject" HorizontalAlignment="Center"/>
+                        <Border BorderBrush="#9EC5AB" BorderThickness="2" Background="#2d3142" MaxHeight="30" Width="200" MaxWidth="400">
+                            <Label x:Name="lblSubject" Content="Case Subject" VerticalContentAlignment="Center" Foreground="White"/>
+                        </Border>
+                    </StackPanel>
+                    
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="25 0 0 0">
+                        <Label Style="{StaticResource TemplateInputLabels}"  Content="Status" HorizontalAlignment="Center"/>
+                        <Border BorderBrush="#9EC5AB" BorderThickness="2" Background="#2d3142" HorizontalAlignment="Center" MaxHeight="30" Width="80">
+                            <Label x:Name="lblState" Content="Case State" VerticalContentAlignment="Center" Foreground="White"/>
+                        </Border>
+                    </StackPanel>
+
+                </Grid>
+                    
+                  
+                <StackPanel Grid.Row="8" Grid.Column="0">
+                    <Label Style="{StaticResource TemplateInputLabels}"  Content="Description" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="#9EC5AB" BorderThickness="2" Background="#2d3142" Height="100" Width="400">
+                        <TextBlock x:Name="tbDescription" TextWrapping="Wrap" Foreground="White" Padding="5" />
+                    </Border>
+                </StackPanel>
+                
             </Grid>
 
 
@@ -67,7 +96,7 @@
                 </Grid.RowDefinitions>
                 <Label Foreground="#9EC5AB" Grid.Row="0" Grid.ColumnSpan="2" Content="Edit Case" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Medium" Margin="0 10 0 0"/>
                 <Label Grid.Row="1" Style="{StaticResource TemplateInputLabels}" Content="Assign new admin" Margin="20 0 0 0" HorizontalAlignment="Center"/>
-                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbAdmins" VerticalContentAlignment="Center" Margin="20 0 20 10" Padding="100 5" MaxWidth="200" HorizontalAlignment="Center"/>
+                <ComboBox Grid.Row="2" Grid.Column="0" x:Name="cbAdmins" VerticalContentAlignment="Center" Margin="20 0 20 10" Width="200" Height="25" HorizontalAlignment="Center"/>
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="1" Grid.Column="1" Content="Status" HorizontalAlignment="Center"/>
                 <ComboBox x:Name="cbState" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="5" Height="30" Width="100" MaxWidth="100"/>

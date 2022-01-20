@@ -155,6 +155,75 @@ namespace CaseManagementApp.Services
 
         #endregion
 
+        #region UPDATE
+
+        public void UpdateAddress(int id, AddressEntity address)
+        {
+            var patchedAddress = _context.Addresses.Find(id);
+
+            if (patchedAddress != null && patchedAddress.Id == id)
+            {
+                patchedAddress.StreetName = address.StreetName;
+                patchedAddress.ZipCode = address.ZipCode;
+                patchedAddress.City = address.City;
+                patchedAddress.Country = address.Country;
+
+                _context.Update(patchedAddress);
+                _context.SaveChanges();
+            }
+        }
+
+
+        public void UpdateCustomer(int id, CustomerEntity customer)
+        {
+            var patchedCustomer = _context.Customers.Find(id);
+
+            if(patchedCustomer != null && patchedCustomer.Id == id)
+            {
+                patchedCustomer.FirstName = customer.FirstName;
+                patchedCustomer.LastName = customer.LastName;
+                patchedCustomer.Email = customer.Email;
+                patchedCustomer.AddressId = customer.AddressId;
+
+                _context.Update(patchedCustomer);
+                _context.SaveChanges();
+            }
+        }
+
+        public void UpdateAdmin(int id, AdminEntity admin)
+        {
+            var patchedAdmin = _context.Admins.Find(id);
+
+            if(patchedAdmin != null && patchedAdmin.Id == id)
+            {
+                patchedAdmin.FirstName = admin.FirstName;
+                patchedAdmin.LastName = admin.LastName;
+                patchedAdmin.Email = admin.Email;
+                patchedAdmin.AddressId = admin.AddressId;
+
+                _context.Update(patchedAdmin);
+                _context.SaveChanges();
+            }
+        }
+
+        public void UpdateCase(int id, CaseEntity newCase)
+        {
+            var patchedCase = _context.Cases.Find(id);
+
+            if(patchedCase != null && patchedCase.CaseId == id)
+            {
+                patchedCase.Admin = newCase.Admin;
+                patchedCase.State = newCase.State;
+                patchedCase.UpdatedDate = DateTime.Now;
+
+                _context.Update(patchedCase);
+                _context.SaveChanges();
+            }
+        }
+
+
+        #endregion
+
     }
 
 }

@@ -21,7 +21,7 @@
 
         <StackPanel Grid.Column="0" Background="#2d3142" HorizontalAlignment="Stretch">
 
-            <Label Content="Menu" Foreground="#9EC5AB" HorizontalAlignment="Center" FontFamily="Poppins" FontWeight="Light" Margin="0 20 0 20"/>
+            <Button Content="Start" Background="Transparent" Padding="15 0" Foreground="#9EC5AB" HorizontalAlignment="Center" FontFamily="Poppins" FontWeight="Light" Margin="0 20 0 20" BorderThickness="0" Cursor="Hand" Command="{Binding StartScreenCommand}"/>
            
             <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="New User" Command="{Binding CreateUserCommand}" FontSize="12" IsChecked="True" HorizontalContentAlignment="Left" />
             <RadioButton Style="{StaticResource TemplateMenuButtons}"  Content="New Case" Command="{Binding CreateCaseCommand}" FontSize="12" Margin="0 0 0 20" HorizontalContentAlignment="Left"/>

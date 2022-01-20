@@ -126,7 +126,7 @@ namespace CaseManagementApp.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CaseManagementApp;V1.0.0.0;component/views/createnewadminview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CaseManagementApp;component/views/createnewadminview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\CreateNewAdminView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

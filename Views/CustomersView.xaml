@@ -55,8 +55,8 @@
                             <Label Grid.Column="1" Content="{Binding FirstName}" HorizontalAlignment="Center" Foreground="White"/>
                             <Label Grid.Column="2" Content="{Binding LastName}" HorizontalAlignment="Center" Foreground="White"/>
                             <StackPanel Grid.Column="3" >
-                                <Label Content="{Binding Email}" Foreground="White"/>
-                                <Label Content="{Binding PhoneNumber}" Foreground="White"/>
+                                <Label Content="{Binding Email}" Foreground="White" HorizontalAlignment="Center"/>
+                                <Label Content="{Binding PhoneNumber}" Foreground="White" HorizontalAlignment="Center"/>
                             </StackPanel>
                             <Label Grid.Column="4" Content="{Binding Address.City}" HorizontalAlignment="Center" Foreground="White"/>
                         </Grid>

@@ -11,6 +11,8 @@ namespace CaseManagementApp.Models.ViewModels
     {
 
         #region Commands And Models
+        public RelayCommand StartScreenCommand { get; set; }
+
         public RelayCommand CreateUserCommand { get; set; }
 
 
@@ -25,7 +27,7 @@ namespace CaseManagementApp.Models.ViewModels
         public RelayCommand CaseDetailsCommand { get; set; }
 
 
-       
+        public StartScreenViewModel StartScreenViewModel { get; set; }
         public CreateNewUserViewModel CreateNewUserViewModel { get; set; }
 
         public CustomersViewModel CustomersViewModel { get; set; }
@@ -54,13 +56,14 @@ namespace CaseManagementApp.Models.ViewModels
         public MainWindowViewModel()
         {
 
+            StartScreenViewModel = new StartScreenViewModel();
+
             CreateNewUserViewModel = new CreateNewUserViewModel();
             
             CustomersViewModel = new CustomersViewModel();
 
-            CurrentView = CreateNewUserViewModel;
-
             
+          
             AdminsViewModel = new AdminsViewModel();
             
             CreateNewCaseViewModel = new CreateNewCaseViewModel();
@@ -68,9 +71,12 @@ namespace CaseManagementApp.Models.ViewModels
            
             CaseDetailsViewModel = new CaseDetailsViewModel();
 
-            CustomersViewCommand = new RelayCommand(x => CurrentView = CustomersViewModel);
-        
-            
+            CurrentView = StartScreenViewModel;
+
+
+            StartScreenCommand = new RelayCommand(x => CurrentView = StartScreenViewModel);
+
+            CustomersViewCommand = new RelayCommand(x => CurrentView = CustomersViewModel);                
 
             AdminsViewCommand = new RelayCommand(x => CurrentView = AdminsViewModel);
 

@@ -52,7 +52,7 @@ namespace CaseManagementApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.AdminEntity", b =>
@@ -89,7 +89,7 @@ namespace CaseManagementApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CaseEntity", b =>
@@ -131,7 +131,7 @@ namespace CaseManagementApp.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Cases", (string)null);
+                    b.ToTable("Cases");
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.CustomerEntity", b =>
@@ -173,7 +173,7 @@ namespace CaseManagementApp.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("CaseManagementApp.Models.Entity.AdminEntity", b =>
