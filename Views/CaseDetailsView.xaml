@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CaseManagementApp.Views.CaseDetailsView"
+﻿ <UserControl x:Class="CaseManagementApp.Views.CaseDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -34,13 +34,13 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
-                    <Label  Grid.Row="0" Style="{StaticResource TemplateInputLabels}" Content="Case:" Foreground="White"/>
-                    <Label x:Name="lblCaseId" Grid.Row="0" Foreground="White"/>
+                    <Label  Grid.Row="0" Style="{StaticResource TemplateInputLabels}" Content="Customer:" Foreground="White"/>
+                    <Label x:Name="lblCustomer" Grid.Row="0" Foreground="White"/>
                 </StackPanel>
 
                 <StackPanel  Grid.Row="1" Grid.Column="0">
-                    <Label Style="{StaticResource TemplateInputLabels}" Content="Customer" HorizontalAlignment="Center"/>
-                    <ComboBox x:Name="cbCustomersCase" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="250" Height="25" SelectionChanged="cbCustomers_SelectionChanged"/>
+                    <Label Style="{StaticResource TemplateInputLabels}" Content="Select case" HorizontalAlignment="Center"/>
+                    <ComboBox x:Name="cbCaseSelection" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="250" Height="25" SelectionChanged="cbCaseSelection_SelectionChanged"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" Grid.Column="1">

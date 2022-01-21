@@ -17,8 +17,8 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -28,6 +28,7 @@
 
             <Label Grid.Column="0" Style="{StaticResource TemplateColumnLabel}" Content="Id"/>
             <Label Grid.Column="1" Style="{StaticResource TemplateColumnLabel}" Content="Subject"/>
+
             <Label Grid.Column="2" Style="{StaticResource TemplateColumnLabel}" Content="Date Created"/>
             <Label Grid.Column="3" Style="{StaticResource TemplateColumnLabel}" Content="Date Updated"/>
             <Label Grid.Column="4" Style="{StaticResource TemplateColumnLabel}" Content="Status"/>
@@ -50,8 +51,8 @@
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width=".5*"/>
+                                            <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
@@ -59,7 +60,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" Content="{Binding CaseId}" HorizontalAlignment="Center" Foreground="White"/>
-                                        <Label Grid.Column="1" Content="{Binding Subject}" HorizontalAlignment="Center" Foreground="White"/>
+                                        <Label Grid.Column="1" Content="{Binding Subject}" HorizontalAlignment="Left" Foreground="White"/>
                                         <Label Grid.Column="2" Content="{Binding CreatedDate}" HorizontalAlignment="Center" Foreground="White"/>
                                         <Label Grid.Column="3" Content="{Binding UpdatedDate}" HorizontalAlignment="Center" Foreground="White"/>
                                         <Label Grid.Column="4" Content="{Binding State}" HorizontalAlignment="Center" Foreground="White"/>

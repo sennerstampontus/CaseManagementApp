@@ -19,12 +19,6 @@ using System.Windows.Shapes;
 namespace CaseManagementApp.Views
 {
 
-    enum ToggleState
-    {
-        EditCase,
-        SaveCase
-    }
-
     /// <summary>
     /// Interaction logic for CaseDetailsView.xaml
     /// </summary>
@@ -49,7 +43,7 @@ namespace CaseManagementApp.Views
 
         private async void PopulateComboBoxes()
         {
-            await FillCustomerOptionsAsync();
+            await FillCaseOptionsAsync();
             await FillAdminOptionsAsync();
             await FillStausOptionsAsync();
             ArrengeComboBox();
@@ -61,9 +55,55 @@ namespace CaseManagementApp.Views
             GetAdminList();
         }
 
+        private async Task FillCaseOptionsAsync()
+        {
+            cbCaseSelection.Items.Clear();
+
+            foreach (var _case in await customerService.GetCasesAsync())
+            {
+                cbCaseSelection.Items.Add(new KeyValuePair<int, string>(_case.CaseId, $"Case Id: {_case.CaseId} {_case.Subject} | [{_case.State}]"));
+            }
+        }
+
+
+        private async Task FillAdminOptionsAsync()
+        {
+            cbAdmins.Items.Clear();
+
+            foreach (var admin in await adminService.GetAdminsAsync())
+            {
+                cbAdmins.Items.Add(new KeyValuePair<int, string>(admin.Id, $"{admin.Id} : {admin.FirstName} {admin.LastName}"));
+                _admins.Add(admin);
+            }
+        }
+
+
+        private async Task FillStausOptionsAsync()
+        {
+            cbState.Items.Clear();
+
+            foreach (var _state in await Task.FromResult(Enum.GetValues(typeof(Status))))
+            {
+                cbState.Items.Add(new KeyValuePair<int, string>((int)_state, _state.ToString()));
+            }
+        }
+
+        private void ArrengeComboBox()
+        {
+            cbCaseSelection.SelectedValuePath = "Key";
+            cbCaseSelection.DisplayMemberPath = "Value";
+
+            cbAdmins.SelectedValuePath = "Key";
+            cbAdmins.DisplayMemberPath = "Value";
+
+            cbState.SelectedValuePath = "Key";
+            cbState.DisplayMemberPath = "Value";
+        }
+
+
         private AdminEntity SetValues(CaseEntity caseResult)
         {
-            lblCaseId.Content = caseResult.CaseId;
+            lblCustomer.Content = $"{caseResult.Customer.FullName} | {caseResult.Customer.Email}";
             lblSubject.Content = caseResult.Subject;
             tbDescription.Text = caseResult.Description;
             lblAdmins.Content = caseResult.Admin.FullName;
@@ -72,15 +112,17 @@ namespace CaseManagementApp.Views
             return caseResult.Admin;
         }
 
+
         private CaseEntity GetCase()
         {
-            var caseId = (int)cbCustomersCase.SelectedValue;
+            var caseId = (int)cbCaseSelection.SelectedValue;
             var _case = caseService.GetCase(caseId);
 
             SetValues(_case);
 
             return _case;
         }
+
 
         private async void GetCustomerList()
         {
@@ -100,51 +142,6 @@ namespace CaseManagementApp.Views
             }
         }
 
-        private async Task FillCustomerOptionsAsync()
-        {
-            //cbCustomersCase.Items.Clear();
-
-            foreach (var _case in await customerService.GetCasesAsync())
-            {
-                cbCustomersCase.Items.Add(new KeyValuePair<int, string>(_case.CaseId, $"{_case.CaseId}: {_case.Customer.Email} <{_case.Subject}>"));
-                //cbCustomers.Items.Add(customer);
-            }
-        }
-
-        private async Task FillAdminOptionsAsync()
-        {
-            //cbAdmins.Items.Clear();
-
-
-            foreach (var admin in await adminService.GetAdminsAsync())
-            {
-                cbAdmins.Items.Add(new KeyValuePair<int, string>(admin.Id, $"{admin.Id} : {admin.FirstName} {admin.LastName}"));
-                _admins.Add(admin);
-                //cbAdmins.Items.Add(admin);
-            }
-        }
-
-        private async Task FillStausOptionsAsync()
-        {
-            cbState.Items.Clear();
-
-            foreach (var _state in await Task.FromResult(Enum.GetValues(typeof(Status))))
-            {
-                cbState.Items.Add(new KeyValuePair<int, string>((int)_state, _state.ToString()));
-            }
-        }
-
-        private void ArrengeComboBox()
-        {
-            cbCustomersCase.SelectedValuePath = "Key";
-            cbCustomersCase.DisplayMemberPath = "Value";
-
-            cbAdmins.SelectedValuePath = "Key";
-            cbAdmins.DisplayMemberPath = "Value";
-
-            cbState.SelectedValuePath = "Key";
-            cbState.DisplayMemberPath = "Value";
-        }
 
         private int UpdateCaseAdmin()
         {          
@@ -161,11 +158,25 @@ namespace CaseManagementApp.Views
 
         }
 
+
         private string UpdateCaseState()
         {
-            var newCaseState = (Status)Enum.Parse(typeof(Status), cbState.SelectedValue.ToString());
-            return newCaseState.ToString();
+            if(cbState.SelectedValue == null)
+            {
+                string currentState = GetCase().State;
+                cbState.SelectedValue = (Status)Enum.Parse(typeof(Status), currentState);
+                return currentState;
+            }
+
+            else
+            {
+                var newCaseState = (Status)Enum.Parse(typeof(Status), cbState.SelectedValue.ToString());
+                return newCaseState.ToString();
+            }
+
+
         }
+
 
         private void btnSaveCase_Click(object sender, RoutedEventArgs e)
         {
@@ -193,6 +204,11 @@ namespace CaseManagementApp.Views
                 updateCaseService.UpdateCase(caseId, patchedCase);
             }
 
+            else if(newState == null)
+            {
+                cbState.SelectedValue = _case.State;
+            }
+
             else
             {                          
                 CaseEntity patchedCase = new()
@@ -204,22 +220,23 @@ namespace CaseManagementApp.Views
                 updateCaseService.UpdateCase(caseId, patchedCase);
             }
 
-            
-            
-
-
-            
-            
         }
 
-        private void cbCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void cbCaseSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var _case = GetCase();
             var state = (Status)Enum.Parse(typeof(Status),_case.State);
             
-
             cbAdmins.SelectedValue = _case.Admin.Id;
 
+        }
+
+
+        private void Clear()
+        {
+            cbAdmins.SelectedValue = null;
+            cbState.SelectedValue = null;
         }
     }
 }
