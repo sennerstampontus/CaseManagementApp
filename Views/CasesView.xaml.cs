@@ -5,6 +5,7 @@ using CaseManagementApp.Models.ViewModels;
 using CaseManagementApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,38 +18,60 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CaseManagementApp.Views
 {
+    enum SortState
+    {
+        Default,
+        NewestCreatedDate,
+        NewestUpdatedDate,
+        StatusWaiting,
+        StatusOpened,
+        StatusClosed,
+        OldestCreatedDate,
+        OldestUpdatedDate
+    }
+
     /// <summary>
     /// Interaction logic for CasesView.xaml
     /// </summary>
     public partial class CasesView : UserControl
     {
         SqlService sqlService = new();
-
+        private readonly List<CaseEntity> cases = new();
+       
         public CasesView()
         {
             
             InitializeComponent();
-            GetCases();
+            Task.FromResult(GetCases());           
+                    
         }
 
-        private async void GetCases()
+ 
+        private async Task<IEnumerable<CaseEntity>> GetCases()
         {
             var _case = await sqlService.GetCasesAsync();
             foreach (var item in _case)
             {
-                lvCases.Items.Add(item);
-                
+                cases.Add(item);              
             }
+            
+            lvCases.ItemsSource = cases;
+
+            return _case;
+        }
+
+        private void ShowCaseDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           
+            var obj = (Button)sender;
+            var item = (Case)obj.DataContext;
 
             
         }
-
-        private void ShowCaseDetails_MouseDoubleClick(object sender, RoutedEventArgs e)
-        {
-           
-        }
+        
     }
 }

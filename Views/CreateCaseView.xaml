@@ -43,8 +43,11 @@
 
                 <Label Style="{StaticResource TemplateInputLabels}" Grid.Row="4" Grid.Column="0" Content="Description"/>
                 <TextBox Style="{StaticResource TemplateInputFields}" x:Name="tbDescription" Height="80" MaxHeight="120" TextWrapping="Wrap" Grid.Row="5" Grid.Column="0" Margin="0 0 20 10"/>
-               
-                <Button Style="{StaticResource TemplateSubmitButtons}" x:Name="CreateCase_btn" Grid.Column="0" Grid.Row="6" Content="Submit" Padding="5" Margin="0 20 20 0" Click="CreateCase_btn_Click"/>
+
+                <StackPanel Grid.Column="0" Grid.Row="6">
+                    <Button Style="{StaticResource TemplateSubmitButtons}" x:Name="CreateCase_btn"  Content="Submit" Padding="5" Margin="0 20 20 0" Click="CreateCase_btn_Click"/>
+                    <Label x:Name="lblError" Foreground="Red" FontSize="12" HorizontalAlignment="Center" Margin="0 15 0 0"/>
+                </StackPanel>
 
             </Grid>
 

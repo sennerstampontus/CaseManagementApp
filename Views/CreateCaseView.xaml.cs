@@ -50,8 +50,21 @@ namespace CaseManagementApp.Views
 
         private async void CreateCase_btn_Click(object sender, RoutedEventArgs e)
         {
-            await CreateCaseAsync();
-           
+            
+            if (cbState.SelectedValue == null)
+            {
+                lblError.Content = "Please select status.";
+            }
+
+            else if(cbCustomers.SelectedIndex == -1 && tbSubject.Text == "" && tbDescription.Text == "")
+            {
+                lblError.Content = "Pleae check the fields.";
+            }
+
+            else
+            {
+                await CreateCaseAsync();
+            }
         }
 
         private async Task CreateCaseAsync()
@@ -63,22 +76,21 @@ namespace CaseManagementApp.Views
 
             var adminId = (int)cbAdmins.SelectedValue;
             var admin = adminService.GetAdmin(adminId);
+            
 
             Case _case = new()
             {
                 Customer = customer,
                 Admin = admin,
                 Subject = tbSubject.Text,
-                Description = tbDescription.Text,
+                Description = tbDescription.Text,              
                 State = (Status)Enum.Parse(typeof(Status),cbState.SelectedValue.ToString())
             };
 
-            if(cbCustomers.SelectedIndex != -1 && tbSubject.Text != "" && tbDescription.Text != "")
-            {
                 SqlService sqlService = new();
                 sqlService.CreateCase(_case);
                 ClearFields();
-            }
+    
         }
 
         private async Task PopulateOptionsAsync()
@@ -144,6 +156,7 @@ namespace CaseManagementApp.Views
             cbCustomers.SelectedIndex = -1;
             cbAdmins.SelectedIndex = -1;
             cbState.SelectedIndex = -1;
+            lblError.Content = string.Empty;
         }
         
     }

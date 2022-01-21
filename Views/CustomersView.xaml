@@ -17,7 +17,7 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width=".3*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -45,7 +45,7 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width=".3*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -55,8 +55,8 @@
                             <Label Grid.Column="1" Content="{Binding FirstName}" HorizontalAlignment="Center" Foreground="White"/>
                             <Label Grid.Column="2" Content="{Binding LastName}" HorizontalAlignment="Center" Foreground="White"/>
                             <StackPanel Grid.Column="3" >
-                                <Label Content="{Binding Email}" Foreground="White" HorizontalAlignment="Center"/>
-                                <Label Content="{Binding PhoneNumber}" Foreground="White" HorizontalAlignment="Center"/>
+                                <Label Content="{Binding Email}" Foreground="#9EC5AB" HorizontalAlignment="Left"/>
+                                <Label Content="{Binding PhoneNumber}" Foreground="White" HorizontalAlignment="Left"/>
                             </StackPanel>
                             <Label Grid.Column="4" Content="{Binding Address.City}" HorizontalAlignment="Center" Foreground="White"/>
                         </Grid>

@@ -23,19 +23,28 @@ namespace CaseManagementApp.Views
     public partial class StartUpScreen : UserControl
     {
 
-        private readonly SqlService recentCases = new SqlService();
-
+        private readonly SqlService recentCases = new();
+        private readonly List<CaseEntity> caseList = new();
 
 
         public StartUpScreen()
         {
             InitializeComponent();
             GetCases();
+            SetCounterToLabels();
+        }
+
+        private void SetCounterToLabels()
+        {
+            lblTotalCases.Content = caseList.Count.ToString();
+            lblCasesWaiting.Content = caseList.Where(x => x.State.Contains("Waiting")).Count().ToString();
+            lblCasesOpened.Content = caseList.Where(x => x.State.Contains("Opened")).Count().ToString();
+            lblCasesClosed.Content = caseList.Where(x => x.State.Contains("Closed")).Count().ToString();
         }
 
         private async void GetCases()
         {
-            List<CaseEntity> caseList = new List<CaseEntity>();
+            
             foreach(var _case in await recentCases.GetCasesAsync())
             {
                 caseList.Add(_case);
