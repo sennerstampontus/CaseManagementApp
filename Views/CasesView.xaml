@@ -47,7 +47,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Name="spTest">
-                            <Button x:Name="ShowCaseDetails" Command="{Binding CaseDetailsCommand}" HorizontalContentAlignment="Stretch" Background="Transparent" MouseDoubleClick="ShowCaseDetails_MouseDoubleClick">
+                            <Button x:Name="ShowCaseDetails" Command="{Binding CaseDetailsCommand}" HorizontalContentAlignment="Stretch" Background="Transparent">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>

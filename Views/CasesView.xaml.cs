@@ -43,14 +43,18 @@ namespace CaseManagementApp.Views
         private readonly List<CaseEntity> cases = new();
        
         public CasesView()
-        {
-            
+        {           
             InitializeComponent();
-            Task.FromResult(GetCases());           
-                    
+            Task.FromResult(GetCases());                              
         }
 
- 
+        /// <summary>
+        /// <para>
+        /// Hämtar ut en lista av Case från Databasen.
+        /// </para>
+        /// Se <see cref="SqlService.GetCasesAsync()"/>
+        /// </summary>
+        /// <returns></returns>
         private async Task<IEnumerable<CaseEntity>> GetCases()
         {
             var _case = await sqlService.GetCasesAsync();
@@ -62,16 +66,6 @@ namespace CaseManagementApp.Views
             lvCases.ItemsSource = cases;
 
             return _case;
-        }
-
-        private void ShowCaseDetails_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-           
-            var obj = (Button)sender;
-            var item = (Case)obj.DataContext;
-
-            
-        }
-        
+        }       
     }
 }

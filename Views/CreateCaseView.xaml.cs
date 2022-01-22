@@ -34,6 +34,11 @@ namespace CaseManagementApp.Views
             ArrengeComboBox();                                                
         }
 
+
+        /// <summary>
+        /// Hämtar ut den markerade Customer i ComboBoxen från Databasen.
+        /// </summary>
+        /// <returns></returns>
         private async Task<CustomerEntity> GetCustomerAsync()
         {
             var customerId = (int)cbCustomers.SelectedValue;
@@ -42,6 +47,11 @@ namespace CaseManagementApp.Views
             return customer;
         }
 
+
+        /// <summary>
+        /// Hämtar ut den markerade Admin i ComboBoxen från Databasen.
+        /// </summary>
+        /// <returns></returns>
         private async Task<AdminEntity> GetAdminAsync()
         {
             var adminId = (int)cbAdmins.SelectedValue;
@@ -92,6 +102,11 @@ namespace CaseManagementApp.Views
     
         }
 
+
+        /// <summary>
+        /// Anropar alla metoder som populerar ComboBoxarna.
+        /// </summary>
+        /// <returns></returns>
         private async Task PopulateOptionsAsync()
         {
             await FillCustomerOptionsAsync();
@@ -99,6 +114,10 @@ namespace CaseManagementApp.Views
             await FillStausOptionsAsync();
         }
 
+
+        /// <summary>
+        /// Ordnar upp vyn för ComboBoxarna. 
+        /// </summary>
         private void ArrengeComboBox()
         {
             cbCustomers.SelectedValuePath = "Key";
@@ -111,7 +130,10 @@ namespace CaseManagementApp.Views
             cbState.DisplayMemberPath= "Value";
         }
 
-
+        /// <summary>
+        /// Fyller på med alla Status state i ComboBoxen.
+        /// </summary>
+        /// <returns></returns>
         private async Task FillStausOptionsAsync()
         {
             cbState.Items.Clear();
@@ -121,6 +143,10 @@ namespace CaseManagementApp.Views
             }
         }
 
+        /// <summary>
+        /// Fyller på med alla Customers i ComboBoxen.
+        /// </summary>
+        /// <returns></returns>
         private async Task FillCustomerOptionsAsync()
         {
             cbCustomers.Items.Clear();
@@ -130,8 +156,9 @@ namespace CaseManagementApp.Views
                 cbCustomers.Items.Add(new KeyValuePair<int, string>(customer.Id, $"{customer.FullName} <{customer.Email}>"));      
             }                  
         }
+
         /// <summary>
-        /// Fyller på med 
+        /// Fyller på med alla admins i ComboBoxen.
         /// </summary>
         /// <returns></returns>
         private async Task FillAdminOptionsAsync()

@@ -27,18 +27,16 @@ namespace CaseManagementApp.Views
             GetAdminList();
         }
 
+        /// <summary>
+        /// Hämtar alla admins från Databasen och sätter ListView.
+        /// </summary>
         private async void GetAdminList()
         {
-            SqlService addresses = new();
-            SqlService sqlService = new();
-            var addressList = await addresses.GetAddressesAsync();
+            SqlService adminService = new();
 
-
-
-            var adminList = await sqlService.GetAdminsAsync();
+            var adminList = await adminService.GetAdminsAsync();
             foreach (var item in adminList)
             {
-
                 lvAdmins.Items.Add(item);
             }          
 
