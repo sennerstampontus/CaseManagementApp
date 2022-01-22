@@ -21,9 +21,9 @@ namespace CaseManagementApp.Services
 
 
         #region CREATE
-        public int CreateAddress(Address address)
+        public async Task<int> SaveDbAddresAsync(Address address)
         {
-            var _address = _context.Addresses.Where(x => x.StreetName == address.StreetName && x.ZipCode == address.ZipCode).FirstOrDefault();
+            var _address = await Task.FromResult(_context.Addresses.Where(x => x.StreetName == address.StreetName && x.ZipCode == address.ZipCode).FirstOrDefault());
             if (_address == null)
             {
                 var addressEntity = new AddressEntity() { StreetName = address.StreetName, ZipCode = address.ZipCode, City = address.City, Country = address.Country};
@@ -36,9 +36,9 @@ namespace CaseManagementApp.Services
         }
 
        
-        public int CreateCustomer(Customer customer)
+        public async Task<int> SaveDbCustomerAsync(Customer customer)
         {
-            var _customer = _context.Customers.Where(x => x.Email == customer.Email).FirstOrDefault();       
+            var _customer = await Task.FromResult(_context.Customers.Where(x => x.Email == customer.Email).FirstOrDefault());       
             if (_customer == null)
             {
                 var customerEntity = new CustomerEntity();
@@ -47,7 +47,7 @@ namespace CaseManagementApp.Services
                 customerEntity.LastName = customer.LastName;
                 customerEntity.Email = customer.Email;
                 customerEntity.PhoneNumber = customer.PhoneNumber;
-                customerEntity.AddressId = CreateAddress(customer.Address);
+                customerEntity.AddressId = await SaveDbAddresAsync(customer.Address);
                 
 
                 _context.Customers.Add(customerEntity);
@@ -61,9 +61,9 @@ namespace CaseManagementApp.Services
 
         }
 
-        public int CreateAdmin(Admin admin)
+        public async Task<int> SaveDbAdminAsync(Admin admin)
         {
-            var _admin = _context.Admins.Where(x => x.Email == admin.Email).FirstOrDefault();
+            var _admin = await Task.FromResult(_context.Admins.Where(x => x.Email == admin.Email).FirstOrDefault());
             if (_admin == null)
             {
                 var adminEntity = new AdminEntity();
@@ -71,7 +71,7 @@ namespace CaseManagementApp.Services
                 adminEntity.FirstName = admin.FirstName;
                 adminEntity.LastName = admin.LastName;
                 adminEntity.Email = admin.Email;
-                adminEntity.AddressId = CreateAddress(admin.Address);
+                adminEntity.AddressId = await SaveDbAddresAsync(admin.Address);
 
 
                 _context.Admins.Add(adminEntity);
@@ -109,9 +109,9 @@ namespace CaseManagementApp.Services
 
         //Single result
 
-        public AddressEntity GetAddress(int id)
+        public async Task<AddressEntity> GetAddress(int id)
         {
-            return _context.Addresses.SingleOrDefault(x => x.Id == id);
+            return await Task.FromResult(_context.Addresses.SingleOrDefault(x => x.Id == id));
         }
 
         public async Task<CustomerEntity> GetCustomerDbAsync(int id)
@@ -157,9 +157,9 @@ namespace CaseManagementApp.Services
 
         #region UPDATE
 
-        public void UpdateAddress(int id, AddressEntity address)
+        public async void UpdateAddressDbAsync(int id, AddressEntity address)
         {
-            var patchedAddress = _context.Addresses.Find(id);
+            var patchedAddress = await Task.FromResult(_context.Addresses.Find(id));
 
             if (patchedAddress != null && patchedAddress.Id == id)
             {
@@ -174,9 +174,9 @@ namespace CaseManagementApp.Services
         }
 
 
-        public void UpdateCustomer(int id, CustomerEntity customer)
+        public async void UpdateCustomerDbAsync(int id, CustomerEntity customer)
         {
-            var patchedCustomer = _context.Customers.Find(id);
+            var patchedCustomer = await Task.FromResult(_context.Customers.Find(id));
 
             if(patchedCustomer != null && patchedCustomer.Id == id)
             {
@@ -190,9 +190,9 @@ namespace CaseManagementApp.Services
             }
         }
 
-        public void UpdateAdmin(int id, AdminEntity admin)
+        public async void UpdateAdminDbAsync(int id, AdminEntity admin)
         {
-            var patchedAdmin = _context.Admins.Find(id);
+            var patchedAdmin = await Task.FromResult(_context.Admins.Find(id));
 
             if(patchedAdmin != null && patchedAdmin.Id == id)
             {
@@ -220,10 +220,7 @@ namespace CaseManagementApp.Services
                 _context.SaveChanges();
             }
         }
-
-
         #endregion
-
     }
 
 }

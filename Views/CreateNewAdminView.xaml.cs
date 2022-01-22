@@ -36,7 +36,7 @@ namespace CaseManagementApp.Views
         /// <summary>
         /// Skapar en ny Amdin med de inmatade värdena.
         /// </summary>
-        public void CreateAdmin()
+        public async void CreateAdmin()
         {
             Admin admin = new()
             {
@@ -53,7 +53,7 @@ namespace CaseManagementApp.Views
             };
 
             SqlService sqlService = new();
-            int Exist = sqlService.CreateAdmin(admin);
+            int Exist = await sqlService.SaveDbAdminAsync(admin);
             if(Exist == -1)
                 tbError.Content = "An admin with the same email aldready exists";
             
