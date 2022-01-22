@@ -31,17 +31,20 @@ namespace CaseManagementApp.Views
             InitializeComponent();          
         }
 
-        private async void CreateCustomer_btn_Click(object sender, RoutedEventArgs e)
+        private void CreateCustomer_btn_Click(object sender, RoutedEventArgs e)
         {
 
-            await CreateCustomerAsync();
+            CreateCustomer();
             
         }
 
-        public async Task CreateCustomerAsync()
+        /// <summary>
+        /// Skapar en ny Customer i databasen från de inmatade värdena.
+        /// </summary>
+        public void CreateCustomer()
         {
 
-            Customer customer = new Customer()
+            Customer customer = new()
             {
                 FirstName = tbFirstName.Text,
                 LastName = tbLastName.Text,
@@ -61,15 +64,18 @@ namespace CaseManagementApp.Views
             if (tbFirstName.Text != "" && tbLastName.Text != "" && tbEmail.Text != "")
             {
                 
-                SqlService SqlService = new SqlService();
+                SqlService SqlService = new();
                 
                 int Exist = SqlService.CreateCustomer(customer);              
                 if (Exist == -1)
                     tbErrorTxt.Content = "Customer with email already exists.";
+
+                else
+                    ClearFields();
             }
 
             else
-                ClearFields();
+                tbErrorTxt.Content = "Please check the fields.";
                 
 
 
@@ -80,6 +86,7 @@ namespace CaseManagementApp.Views
             tbFirstName.Text = "";
             tbLastName.Text = "";
             tbEmail.Text = "";
+            tbPhoneNumber.Text = "";
             tbStreetName.Text = "";
             tbZipCode.Text = "";
             tbCity.Text = "";

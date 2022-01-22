@@ -83,7 +83,7 @@ namespace CaseManagementApp.Services
                 return -1;
         }
 
-        public int CreateCase(Case _case)
+        public async Task<int> SaveDbCaseAsync(Case _case)
         {
             var caseEntity = new CaseEntity();
             var _customer = _context.Customers.Where(x => x.Id == _case.Customer.Id).FirstOrDefault();
@@ -100,7 +100,7 @@ namespace CaseManagementApp.Services
             _context.SaveChanges();
 
 
-            return caseEntity.CaseId;
+            return await Task.FromResult(caseEntity.CaseId);
         }
 
         #endregion
@@ -114,20 +114,20 @@ namespace CaseManagementApp.Services
             return _context.Addresses.SingleOrDefault(x => x.Id == id);
         }
 
-        public CustomerEntity GetCustomer(int id)
+        public async Task<CustomerEntity> GetCustomerDbAsync(int id)
         {
-            return _context.Customers.Include(x => x.Address).SingleOrDefault(x =>x.Id == id);
+            return await Task.FromResult(_context.Customers.Include(x => x.Address).SingleOrDefault(x =>x.Id == id));
         }
 
-        public AdminEntity GetAdmin(int id)
+        public async Task<AdminEntity> GetAdminDbAsync(int id)
         {
-            return _context.Admins.Include(x => x.Address).SingleOrDefault(x => x.Id == id);
+            return await Task.FromResult(_context.Admins.Include(x => x.Address).SingleOrDefault(x => x.Id == id));
         }
 
 
-        public CaseEntity GetCase(int id)
+        public async Task<CaseEntity> GetCaseAsync(int id)
         {
-            return _context.Cases.Include(x => x.Customer).Include(x => x.Admin).SingleOrDefault(x => x.CaseId == id);
+            return await Task.FromResult(_context.Cases.Include(x => x.Customer).Include(x => x.Admin).SingleOrDefault(x => x.CaseId == id));
         }
 
         //Multiple results
@@ -206,9 +206,9 @@ namespace CaseManagementApp.Services
             }
         }
 
-        public void UpdateCase(int id, CaseEntity newCase)
+        public async Task UpdateCaseDbAsync(int id, CaseEntity newCase)
         {
-            var patchedCase = _context.Cases.Find(id);
+            var patchedCase = await Task.FromResult(_context.Cases.Find(id));
 
             if(patchedCase != null && patchedCase.CaseId == id)
             {

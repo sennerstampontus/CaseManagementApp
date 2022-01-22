@@ -31,53 +31,52 @@ namespace CaseManagementApp.Views
         {
             InitializeComponent();
             Task.FromResult(PopulateOptionsAsync());
-            ArrengeComboBox();
-            GetCustomerList();
-            
-            
+            ArrengeComboBox();                                                
         }
 
-        public async void GetCustomerList()
+        private async Task<CustomerEntity> GetCustomerAsync()
         {
-            List<CustomerEntity> customerList = new();
+            var customerId = (int)cbCustomers.SelectedValue;
+            var customer = await customerService.GetCustomerDbAsync(customerId);
 
-            foreach(var customer in await customerService.GetCustomersAsync())
-            {
-                customerList.Add(customer);
-            }
+            return customer;
+        }
 
+        private async Task<AdminEntity> GetAdminAsync()
+        {
+            var adminId = (int)cbAdmins.SelectedValue;
+            var admin = await adminService.GetAdminDbAsync(adminId);
+
+            return admin;
         }
 
         private async void CreateCase_btn_Click(object sender, RoutedEventArgs e)
         {
-            
+            var customer = await GetCustomerAsync();
+            var admin = await GetAdminAsync();
+
             if (cbState.SelectedValue == null)
             {
                 lblError.Content = "Please select status.";
             }
 
-            else if(cbCustomers.SelectedIndex == -1 && tbSubject.Text == "" && tbDescription.Text == "")
+            else if(cbCustomers.SelectedValue == null && tbSubject.Text == "" && tbDescription.Text == "")
             {
                 lblError.Content = "Pleae check the fields.";
             }
 
             else
             {
-                await CreateCaseAsync();
+                await CreateCaseAsync(customer, admin);
             }
         }
 
-        private async Task CreateCaseAsync()
+        /// <summary>
+        /// Skapar ett nytt Case med de inmatade värdena.<br></br>
+        /// Samt tar in vilken kund och handläggare ärendet tillhör.
+        /// </summary>
+        private async Task CreateCaseAsync(CustomerEntity customer, AdminEntity admin)
         {
-
-           
-            var customerId = (int)cbCustomers.SelectedValue;
-            var customer = customerService.GetCustomer(customerId);
-
-            var adminId = (int)cbAdmins.SelectedValue;
-            var admin = adminService.GetAdmin(adminId);
-            
-
             Case _case = new()
             {
                 Customer = customer,
@@ -88,7 +87,7 @@ namespace CaseManagementApp.Views
             };
 
                 SqlService sqlService = new();
-                sqlService.CreateCase(_case);
+                await sqlService.SaveDbCaseAsync(_case);
                 ClearFields();
     
         }
@@ -128,14 +127,13 @@ namespace CaseManagementApp.Views
             
             foreach (var customer in await customerService.GetCustomersAsync())
             {
-                cbCustomers.Items.Add(new KeyValuePair<int, string>(customer.Id, customer.FirstName));      
-                //cbCustomers.Items.Add(customer);
-            }
-
-            
-            
+                cbCustomers.Items.Add(new KeyValuePair<int, string>(customer.Id, $"{customer.FullName} <{customer.Email}>"));      
+            }                  
         }
-
+        /// <summary>
+        /// Fyller på med 
+        /// </summary>
+        /// <returns></returns>
         private async Task FillAdminOptionsAsync()
         {
             cbAdmins.Items.Clear();
@@ -144,7 +142,6 @@ namespace CaseManagementApp.Views
             foreach (var admin in await adminService.GetAdminsAsync())
             {
                 cbAdmins.Items.Add(new KeyValuePair<int, string>(admin.Id, $"{admin.Id} : {admin.FirstName} {admin.LastName}"));
-                //cbAdmins.Items.Add(admin);
             }
             
         }
@@ -158,6 +155,5 @@ namespace CaseManagementApp.Views
             cbState.SelectedIndex = -1;
             lblError.Content = string.Empty;
         }
-        
     }
 }

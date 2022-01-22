@@ -29,6 +29,9 @@ namespace CaseManagementApp.Views
             GetCustomerList();
         }
 
+        /// <summary>
+        /// GetCustomerList hämtar kunder från databasen och lägger till i ListView.
+        /// </summary>
         private async void GetCustomerList()
         {
 
