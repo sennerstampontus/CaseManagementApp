@@ -27,15 +27,18 @@ namespace CaseManagementApp.Views
             InitializeComponent();
         }
 
-        private async void CreateAdmin_btn_Click(object sender, RoutedEventArgs e)
+        private void CreateAdmin_btn_Click(object sender, RoutedEventArgs e)
         {
-            await CreateAdminAsync();
+            CreateAdmin();
             
         }
 
-        public async Task CreateAdminAsync()
+        /// <summary>
+        /// Skapar en ny Amdin med de inmatade värdena.
+        /// </summary>
+        public void CreateAdmin()
         {
-            Admin admin = new Admin()
+            Admin admin = new()
             {
                 FirstName = tbFirstName.Text,
                 LastName = tbLastName.Text,
@@ -49,7 +52,7 @@ namespace CaseManagementApp.Views
                 }
             };
 
-            SqlService sqlService = new SqlService();
+            SqlService sqlService = new();
             int Exist = sqlService.CreateAdmin(admin);
             if(Exist == -1)
                 tbError.Content = "An admin with the same email aldready exists";

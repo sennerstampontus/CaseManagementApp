@@ -34,6 +34,9 @@ namespace CaseManagementApp.Views
             SetCounterToLabels();
         }
 
+        /// <summary>
+        /// Initierar räknare att sätta rätt antal i columnerna.
+        /// </summary>
         private void SetCounterToLabels()
         {
             lblTotalCases.Content = caseList.Count.ToString();
@@ -42,6 +45,11 @@ namespace CaseManagementApp.Views
             lblCasesClosed.Content = caseList.Where(x => x.State.Contains("Closed")).Count().ToString();
         }
 
+
+        /// <summary>
+        /// Används för att hämta lista av "cases"
+        /// och sedan sätta ListView sorterat efter senaste ärenden.
+        /// </summary>
         private async void GetCases()
         {
             

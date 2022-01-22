@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -31,16 +32,23 @@ namespace CaseManagementApp.Views
         private readonly SqlService updateCaseService = new();
         private readonly SqlService updateAdminService = new();
         private readonly List<AdminEntity> _admins = new();
+        static Timer timer = new Timer();
+
 
         public CaseDetailsView()
         {
             InitializeComponent();
-            GetLists();
-            PopulateComboBoxes();
+            GetAdminListAsync();
+            PopulateComboBoxes();          
         }
 
-      
 
+        /// <summary>
+        /// <para>
+        /// Anropar enskilda metoder för att fylla ComboBoxar med sin information.<br></br>
+        /// Samt anropa en metod för att ordna upp informationen.
+        /// </para>
+        /// </summary>
         private async void PopulateComboBoxes()
         {
             await FillCaseOptionsAsync();
@@ -49,12 +57,11 @@ namespace CaseManagementApp.Views
             ArrengeComboBox();
         }
 
-        private void GetLists()
-        {
-            GetCustomerList();
-            GetAdminList();
-        }
 
+        /// <summary>
+        /// Fyller Case ComboBoxen med dess information.
+        /// </summary>
+        /// <returns></returns>
         private async Task FillCaseOptionsAsync()
         {
             cbCaseSelection.Items.Clear();
@@ -65,7 +72,10 @@ namespace CaseManagementApp.Views
             }
         }
 
-
+        /// <summary>
+        /// Fyller Admin ComboBoxen med dess information.
+        /// </summary>
+        /// <returns></returns>
         private async Task FillAdminOptionsAsync()
         {
             cbAdmins.Items.Clear();
@@ -77,7 +87,10 @@ namespace CaseManagementApp.Views
             }
         }
 
-
+        /// <summary>
+        /// Fyller Status ComboBoxen med dess information.
+        /// </summary>
+        /// <returns></returns>
         private async Task FillStausOptionsAsync()
         {
             cbState.Items.Clear();
@@ -88,6 +101,9 @@ namespace CaseManagementApp.Views
             }
         }
 
+        /// <summary>
+        /// Sätter vilken information som ska visas på ComboBoxarna (Key, Value) pair.
+        /// </summary>
         private void ArrengeComboBox()
         {
             cbCaseSelection.SelectedValuePath = "Key";
@@ -100,40 +116,42 @@ namespace CaseManagementApp.Views
             cbState.DisplayMemberPath = "Value";
         }
 
-
-        private AdminEntity SetValues(CaseEntity caseResult)
+        /// <summary>
+        /// Sätter informationen i alla contents utifrån det valda "Case'et".
+        /// </summary>
+        /// <param name="caseResult"></param>
+        private void SetValues(CaseEntity caseResult)
         {
-            lblCustomer.Content = $"{caseResult.Customer.FullName} | {caseResult.Customer.Email}";
+            lblCustomerName.Content = caseResult.Customer.FullName;
+            lblCustomerEmail.Content = caseResult.Customer.Email;
+            lblCustomerPhone.Content = caseResult.Customer.PhoneNumber;
             lblSubject.Content = caseResult.Subject;
             tbDescription.Text = caseResult.Description;
             lblAdmins.Content = caseResult.Admin.FullName;
             lblState.Content = caseResult.State;
 
-            return caseResult.Admin;
         }
 
-
-        private CaseEntity GetCase()
+        /// <summary>
+        /// Hämtar ut ett Case utifrån det valda värdet i ComboBoxen "CaseSelection".
+        /// </summary>
+        /// <returns></returns>
+        private async Task<CaseEntity> GetCaseAsync()
         {
             var caseId = (int)cbCaseSelection.SelectedValue;
-            var _case = caseService.GetCase(caseId);
+            var _case = await caseService.GetCaseAsync(caseId);
 
             SetValues(_case);
 
             return _case;
         }
 
-
-        private async void GetCustomerList()
-        {
-            List<CustomerEntity> customerList = new();
-            foreach(var customer in await customerService.GetCustomersAsync())
-            {
-                customerList.Add(customer);
-            }
-        }
-
-        private async void GetAdminList()
+        /// <summary>
+        /// <para>
+        /// Hämtar admins från databasen och sparar in i <code>adminList</code>
+        /// </para>
+        /// </summary>
+        private async void GetAdminListAsync()
         {
             List<AdminEntity> adminList = new();
             foreach (var admin in await adminService.GetAdminsAsync())
@@ -142,7 +160,10 @@ namespace CaseManagementApp.Views
             }
         }
 
-
+        /// <summary>
+        /// Skickar ut vilken admin det valda caset ska uppdateras till.
+        /// </summary>
+        /// <returns>int värdet -1 om ingen admin är vald.</returns>
         private int UpdateCaseAdmin()
         {          
             if (cbAdmins.SelectedValue != null)
@@ -153,17 +174,20 @@ namespace CaseManagementApp.Views
 
             else
                 return -1;
-            
-            
-
         }
 
-
-        private string UpdateCaseState()
+        /// <summary>
+        /// <para>
+        /// Kontrollerar valet för den nya statusen.
+        /// </para>
+        /// </summary>
+        /// <returns>Samma status om inget är valt<br></br>annars returnerar det nya valet av status</returns>
+        private async Task<string> UpdateCaseStateAsync()
         {
             if(cbState.SelectedValue == null)
             {
-                string currentState = GetCase().State;
+                var currentCase = await GetCaseAsync();
+                string currentState = currentCase.State;
                 cbState.SelectedValue = (Status)Enum.Parse(typeof(Status), currentState);
                 return currentState;
             }
@@ -177,66 +201,98 @@ namespace CaseManagementApp.Views
 
         }
 
-
-        private void btnSaveCase_Click(object sender, RoutedEventArgs e)
+        private async Task UpdateCaseAsync(CaseEntity patchCase)
         {
-
-
-            var _case = GetCase();
-            int caseId = _case.CaseId;
-
+            var _case = patchCase;
+            int caseId = patchCase.CaseId;
 
             var newAdminId = UpdateCaseAdmin();
-            string newState = UpdateCaseState();
+            string newState = await UpdateCaseStateAsync();
 
             var listOfAdmins = FillAdminOptionsAsync();
-            
+
             if(newAdminId > 0)
             {
                 var newAdmin = _admins.Where(x => x.Id == newAdminId).FirstOrDefault();
-                CaseEntity patchedCase = new()
+
+                CaseEntity updatedCase = new()
                 {
                     Admin = newAdmin,
                     State = newState,
                     UpdatedDate = DateTime.Now
                 };
 
-                updateCaseService.UpdateCase(caseId, patchedCase);
+                await updateCaseService.UpdateCaseDbAsync(caseId, updatedCase);
+                SetUpdatedValues(updatedCase);
             }
 
-            else if(newState == null)
+            else if(newAdminId == -1)
             {
-                cbState.SelectedValue = _case.State;
+                lblErrorAdmin.Content = "Please select an admin..";
+            }
+
+            else if (newState == null)
+            {
+                cbState.SelectedValue = patchCase.State;
             }
 
             else
-            {                          
-                CaseEntity patchedCase = new()
+            {
+                CaseEntity updatedCase = new()
                 {
-                    Admin = _case.Admin,
+                    Admin = patchCase.Admin,
                     State = newState
                 };
 
-                updateCaseService.UpdateCase(caseId, patchedCase);
+               await updateCaseService.UpdateCaseDbAsync(caseId, updatedCase);
+               SetUpdatedValues(updatedCase);
             }
+
+           
 
         }
 
-
-        private void cbCaseSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// <para>
+        /// Tar in information från <br></br>
+        /// GetCase, UpdateCaseAdmin, UpdateCaseState och FillAdminOptionsAsync metoderna.<br></br>
+        /// Sätter därefter nya värden till det hämtade "Case'et" och updaterar databasen.
+        /// </para>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btnSaveCase_Click(object sender, RoutedEventArgs e)
         {
-            var _case = GetCase();
-            var state = (Status)Enum.Parse(typeof(Status),_case.State);
+
+            var assignCase = await GetCaseAsync();
+            await UpdateCaseAsync(assignCase);
+     
+        }
+
+        private void SetUpdatedValues(CaseEntity _case)
+        {
+            lblErrorAdmin.Content = "";
+
+            lblUpdatedValuesLabel.Visibility = Visibility.Visible;
+            lblNewAssignedAdminLabel.Visibility = Visibility.Visible;
+            lblNewAssignedStatusLabel.Visibility = Visibility.Visible;
+
+            lblNewAssignedAdmin.Content = _case.Admin.FullName;
+            lblNewAssignedStatus.Content = _case.State.ToString();
+
+        }
+  
+        /// <summary>
+        /// Hämtar information från det valda "Case'et".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void cbCaseSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var _case = await GetCaseAsync();
             
             cbAdmins.SelectedValue = _case.Admin.Id;
 
-        }
-
-
-        private void Clear()
-        {
-            cbAdmins.SelectedValue = null;
-            cbState.SelectedValue = null;
         }
     }
 }
